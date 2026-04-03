@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Sera\\projecten\\RankingAppin4K\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A1B1B26B-866B-4833-9CCA-5A29B881F82C}|ui\\ui.csproj|c:\\users\\sera\\projecten\\rankingappin4k\\ui\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{A1B1B26B-866B-4833-9CCA-5A29B881F82C}|ui\\ui.csproj|solutionrelative:ui\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{8C812AF0-DF07-4760-8EBB-4A67A8455DDF}|business\\business.csproj|c:\\users\\sera\\projecten\\rankingappin4k\\business\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{8C812AF0-DF07-4760-8EBB-4A67A8455DDF}|business\\business.csproj|solutionrelative:business\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{68E37CEF-1DA4-4DC0-A115-CBF40A15E42C}|persistentie\\persistentie.csproj|c:\\users\\sera\\projecten\\rankingappin4k\\persistentie\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{68E37CEF-1DA4-4DC0-A115-CBF40A15E42C}|persistentie\\persistentie.csproj|solutionrelative:persistentie\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1B1B26B-866B-4833-9CCA-5A29B881F82C}|ui\\ui.csproj|c:\\users\\sera\\projecten\\rankingappin4k\\ui\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{A1B1B26B-866B-4833-9CCA-5A29B881F82C}|ui\\ui.csproj|solutionrelative:ui\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A1B1B26B-866B-4833-9CCA-5A29B881F82C}|ui\\ui.csproj|c:\\users\\sera\\projecten\\rankingappin4k\\ui\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -26,11 +26,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Sera\\projecten\\RankingAppin4K\\business\\Program.cs",
               "RelativeDocumentMoniker": "business\\Program.cs",
@@ -43,7 +43,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Sera\\projecten\\RankingAppin4K\\persistentie\\Program.cs",
               "RelativeDocumentMoniker": "persistentie\\Program.cs",
@@ -51,12 +51,11 @@
               "RelativeToolTip": "persistentie\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-03T12:09:42.982Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-03T12:09:42.982Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\Sera\\projecten\\RankingAppin4K\\ui\\MainWindow.xaml",
               "RelativeDocumentMoniker": "ui\\MainWindow.xaml",
@@ -76,8 +75,7 @@
               "RelativeToolTip": "ui\\MainWindow.xaml.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-03T12:08:19.555Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-04-03T12:08:19.555Z"
             }
           ]
         }
