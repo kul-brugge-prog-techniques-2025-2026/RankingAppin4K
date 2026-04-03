@@ -1,1 +1,5 @@
-<Solution />
+<Solution>
+  <Project Path="business/business.csproj" Id="8c812af0-df07-4760-8ebb-4a67a8455ddf" />
+  <Project Path="persistentie/persistentie.csproj" Id="68e37cef-1da4-4dc0-a115-cbf40a15e42c" />
+  <Project Path="ui/ui.csproj" Id="a1b1b26b-866b-4833-9cca-5a29b881f82c" />
+</Solution>
