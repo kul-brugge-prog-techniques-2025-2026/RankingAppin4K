@@ -22,5 +22,20 @@ namespace ui
         {
             InitializeComponent();
         }
+
+        private void btnOptionA_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnOptionB_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

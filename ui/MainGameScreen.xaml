@@ -7,6 +7,61 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="LightGray">
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--Section 1: progressbar-->
+        <StackPanel Grid.Row="0" Margin="20,10">
+            <TextBlock Text="Choose a side:" FontSize="24" HorizontalAlignment="Center" Margin="0,0,0,5"/>
+            <Grid Height="25" Margin="50,0">
+                <ProgressBar x:Name="pbProgress" Height="25" Minimum="0" Maximum="100" Value="0" Foreground="LightGreen"/>
+                <TextBlock x:Name="txtProgress" Text="0%" HorizontalAlignment="Center" FontSize="12" Foreground="Gray"/>
+            </Grid>
+        </StackPanel>
+
+        <!--Section 2: Ranking area-->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="120"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!--option A-->
+            <Button x:Name="btnOptionA" Grid.Column="0" Click="btnOptionA_Click" Margin="10" Background="LightBlue" BorderBrush="Gray">
+                <StackPanel>
+                    <Image x:Name="imageA" Height="400" Stretch="UniformToFill"/>
+                    <TextBlock x:Name="textA" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+                </StackPanel>
+            </Button>
+
+            <!--Middel buttons-->
+            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <TextBlock Text="VS" HorizontalAlignment="Center" FontSize="30" FontWeight="Black" Margin="0, 20" Foreground="Red"/>
+                <Button Content="Undo" Click="btnUndo_Click" Margin="5" Padding="10, 5" Background="White"/>
+                <Button Content="Tie" Click="btnTie_Click" Margin="5" Padding="10, 5" Background="White"/>
+            </StackPanel>
+
+            <!--option B-->
+            <Button x:Name="btnOptionB" Grid.Column="2" Click="btnOptionB_Click"  Margin="10" Background="LightSalmon" BorderBrush="Gray">
+                <StackPanel>
+                    <Image x:Name="imageB" Height="400" Stretch="UniformToFill"/>
+                    <TextBlock x:Name="textB" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
+                </StackPanel>
+            </Button>
+        </Grid>
+
+        <!--Section 3: Filter selection-->
+        <Border Grid.Row="2" Background="White" BorderBrush="#DDD" BorderThickness="0,1,0,0" Padding="15">
+            <StackPanel>
+                <TextBlock Text="Categrieen:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <WrapPanel x:Name="wpFilters">
+                    
+                </WrapPanel>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>
