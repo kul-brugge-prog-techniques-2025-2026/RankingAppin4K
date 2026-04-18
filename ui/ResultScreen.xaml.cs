@@ -22,5 +22,15 @@ namespace ui
         {
             InitializeComponent();
         }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void lvComparison_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
