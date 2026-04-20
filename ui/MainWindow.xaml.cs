@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Models;
 
 namespace ui
 {
@@ -19,6 +20,15 @@ namespace ui
         public MainWindow()
         {
             InitializeComponent();
+
+            //Zet bij het opstarten StartScreen in de container
+            MainContainer.Content = new StartScreen();
+        }
+
+        public void StartRanking(int subjectId)
+        {
+            //Vervangt huidige content door MainGameScreen en geeft subjectId door aan de contstructor
+            MainContainer.Content = new MainGameScreen(subjectId);
         }
     }
 }

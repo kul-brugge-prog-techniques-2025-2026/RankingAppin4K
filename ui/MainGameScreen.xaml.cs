@@ -18,7 +18,7 @@ namespace ui
     /// </summary>
     public partial class MainGameScreen : UserControl
     {
-        public MainGameScreen()
+        public MainGameScreen(int subjectId)
         {
             InitializeComponent();
         }

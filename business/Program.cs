@@ -1,10 +1,10 @@
 ﻿namespace business
 {
-    internal class Program
+    public class BusinessLayer
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello, World!");
+        
         }
     }
 }
