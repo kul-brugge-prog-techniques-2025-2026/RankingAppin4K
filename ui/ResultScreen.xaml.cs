@@ -1,4 +1,5 @@
-﻿using System;
+﻿using business;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -10,6 +11,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Models;
+using business;
 
 namespace ui
 {
@@ -18,9 +21,22 @@ namespace ui
     /// </summary>
     public partial class ResultScreen : UserControl
     {
-        public ResultScreen()
+        private BusinessLayer _business;
+        private int _subjectId;
+
+        public ResultScreen(BusinessLayer business, int subjectId)
         {
             InitializeComponent();
+
+            _business = business;
+            _subjectId = subjectId;
+
+            LoadResults();
+        }
+
+        private void LoadResults()
+        {
+
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

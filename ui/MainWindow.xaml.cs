@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Models;
+using business;
 
 namespace ui
 {
@@ -29,6 +30,11 @@ namespace ui
         {
             //Vervangt huidige content door MainGameScreen en geeft subjectId door aan de contstructor
             MainContainer.Content = new MainGameScreen(subjectId);
+        }
+
+        public void ShowResults(BusinessLayer business, int subjectId)
+        {
+            MainContainer.Content = new ResultScreen(business, subjectId);
         }
     }
 }

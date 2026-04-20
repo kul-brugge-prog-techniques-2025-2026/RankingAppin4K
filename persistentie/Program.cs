@@ -1,6 +1,6 @@
 ﻿namespace persistentie
 {
-    internal class Program
+    public class PersistenceObject
     {
         static void Main(string[] args)
         {
