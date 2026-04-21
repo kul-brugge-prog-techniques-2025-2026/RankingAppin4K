@@ -43,7 +43,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Border CornerRadius="5" ClipToBounds="True" Margin="2">
-                                            <Image Source="{Binding Name}" Height="60" Width="80" Stretch="UniformToFill"/>
+                                            <Image Source="{Binding Image}" Height="60" Width="80" Stretch="UniformToFill"/>
                                         </Border>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -73,17 +73,7 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="10">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="14"/>
-                                        <StackPanel Grid.Column="1" Orientation="Horizontal">
-                                            <TextBlock Text="Match" Foreground="Gray"/>
-                                            <TextBlock Text="{Binding SimilarityRate, StringFormat={}{0}%}" FontWeight="Bold" Foreground="Gray"/>
-                                        </StackPanel>
-                                    </Grid>
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="14"/>
                                 </Border>
                             </DataTemplate>
                         </ListView.ItemTemplate>

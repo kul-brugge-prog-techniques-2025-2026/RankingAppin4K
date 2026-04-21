@@ -1,10 +1,18 @@
-﻿namespace persistentie
+﻿using System.Security.Cryptography.X509Certificates;
+using Models;
+
+namespace persistentie
 {
     public class PersistenceObject
     {
-        static void Main(string[] args)
+        public List<Subject> Give_all_subjects()
         {
-            Console.WriteLine("Hello, World!");
+
+        }
+
+        public List<subjectItem> GetSubjectItems(int subjectId)
+        {
+            return new List<subjectItem>();
         }
     }
 }
