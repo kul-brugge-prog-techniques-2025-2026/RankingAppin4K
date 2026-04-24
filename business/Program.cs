@@ -8,9 +8,11 @@ namespace business
     {
         public Program() 
         {
-            
+            Console.WriteLine("hi");
         }
 
-        
+        public void Main(string[] args) {
+            Console.WriteLine("hi");
+        }
     }
 }

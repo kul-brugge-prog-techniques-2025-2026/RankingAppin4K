@@ -3,16 +3,16 @@ using Models;
 
 namespace persistentie
 {
-    public class PersistenceObject
+    public class Program
     {
-        public List<Subject> Give_all_subjects()
+        public Program()
         {
-
+            Console.WriteLine("hi");
         }
 
-        public List<subjectItem> GetSubjectItems(int subjectId)
+        public void Main(string[] args)
         {
-            return new List<subjectItem>();
+            Console.WriteLine("hi");
         }
     }
 }

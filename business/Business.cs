@@ -8,9 +8,12 @@ namespace business
 {
     public class Business
     {
+        PersistenceObject opslag { get; set; }
+        int subjectId { get; set; }
         public Business(int subjectId, PersistenceObject persistence)
         {
-
+            opslag = persistence;
+            subjectId = subjectId;
         }
 
         public subjectItem[] Give_options()
@@ -41,7 +44,7 @@ namespace business
 
         public List<Subject> Give_all_subjects()
         {
-
+            return null;
         }
     }
 }
