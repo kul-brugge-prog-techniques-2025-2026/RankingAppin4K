@@ -22,14 +22,14 @@ namespace ui
     public partial class StartScreen : UserControl
     {
         //referentie pointer naar business laag
-        private BusinessLayer _business;
+        private Program _business;
 
         public StartScreen()
         {
             InitializeComponent();
 
             //init bussiness logica
-            _business = new BusinessLayer();
+            _business = new Program();
 
             LoadCategories();
         }

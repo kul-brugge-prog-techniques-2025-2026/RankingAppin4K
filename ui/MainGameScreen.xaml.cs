@@ -18,7 +18,7 @@ namespace ui
 {
     public partial class MainGameScreen : UserControl
     {
-        private BusinessLayer _business;
+        private Business _business;
         private PersistenceObject _persistence;
         private subjectItem[] _currentOptions;
         private int _subjectId;
@@ -31,7 +31,7 @@ namespace ui
             _persistence = new PersistenceObject();
 
             //BusinessLayer krijgt subject id en persistence pointer mee, zorgt dat business layer weet welk thema er gerankt wordt
-            _business = new BusinessLayer(_subjectId, _persistence);
+            _business = new Business(_subjectId, _persistence);
 
             LoadFilters();
             NextRound();

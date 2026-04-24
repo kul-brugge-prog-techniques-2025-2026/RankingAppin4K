@@ -20,10 +20,10 @@ namespace ui
     /// </summary>
     public partial class ResultScreen : UserControl
     {
-        private BusinessLayer _business;
+        private Program _business;
         private int _subjectId;
 
-        public ResultScreen(BusinessLayer business, int subjectId)
+        public ResultScreen(Program business, int subjectId)
         {
             InitializeComponent();
 
