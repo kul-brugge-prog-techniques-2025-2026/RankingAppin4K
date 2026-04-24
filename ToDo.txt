@@ -34,3 +34,6 @@ UI: Robin
 Compare functie: Seraphin
 Algoritme: Seraphin
 persistentie: Serpaphin (saveranking/retreveranking, Robin)
+
+
+Robin: aanpassen json bovenaan alle categorieën dan linken met id's
