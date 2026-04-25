@@ -68,7 +68,7 @@ namespace ui
         {
             //Stuurt keuze naar business laag: optie A winnaar (index 0), optie B verliezer (index 1)
             subjectItem[] result = { _currentOptions[0], _currentOptions[1] };
-            _business.Give_result(result);
+            _business.Give_result(result, false);
             NextRound();
         }
 
@@ -76,7 +76,7 @@ namespace ui
         {
             //Stuurt keuze naar business laag: optie B winnaar (index 0), optie A verliezer (index 1)
             subjectItem[] result = { _currentOptions[1], _currentOptions[0] };
-            _business.Give_result(result);
+            _business.Give_result(result, false);
             NextRound();
         }
 
