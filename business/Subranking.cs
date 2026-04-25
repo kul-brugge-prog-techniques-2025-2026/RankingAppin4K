@@ -7,12 +7,15 @@ namespace business
 {
     internal class Subranking
     {
-        public RankingPlace[] rankedHighToLow;
+        public Subranking() {
+            rankedHighToLow = new List<RankingPlace>();
+        } 
+        public List<RankingPlace> rankedHighToLow;
         public int getSize()
         {
             int num = 0;
-            for (int i = 0; i < rankedHighToLow.Length; i++) { 
-                num += rankedHighToLow[i].itemsThisRanking.Length
+            for (int i = 0; i < rankedHighToLow.Count; i++) {
+                num += rankedHighToLow[i].itemsThisRanking.Count;
             }
             return num;
         }

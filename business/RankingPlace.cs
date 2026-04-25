@@ -9,8 +9,8 @@ namespace business
     {
         public RankingPlace()
         {
-            itemsThisRanking = [];
+            itemsThisRanking = new List<subjectItem>();
         }
-        public subjectItem[] itemsThisRanking; //because we need to handle ties, they will be able to get untied when merging, because both get asked, if one wins and the other loses than we get an untie.
+        public List<subjectItem> itemsThisRanking; //because we need to handle ties, they will be able to get untied when merging, because both get asked, if one wins and the other loses than we get an untie.
     }
 }

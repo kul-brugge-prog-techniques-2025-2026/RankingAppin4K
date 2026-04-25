@@ -10,7 +10,7 @@ namespace persistentie
             Console.WriteLine("hi");
         }
 
-        public void Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine("hi");
         }
