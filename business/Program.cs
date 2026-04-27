@@ -12,7 +12,6 @@ namespace business
         }
 
         public static void Main(string[] args) {
-            Console.WriteLine("main lus");
             Business bi = new Business(1, null);
             subjectItem[] items;
             while( (items = bi.Give_options())!= null)

@@ -24,10 +24,9 @@ namespace business
         Subranking MergeSource1;
         Subranking MergeSource2;
         int Source1Iterator;
-        int Source2Iterator;
-        int Source1RPIterator;  //these are specific for iterating int the ranking place in case of iterating over ties
-        int Source2RPIterator;  
+        int Source2Iterator; 
         int subRankingIndex;    //current index in the subranking, the sources are based on this one.
+        DirectComparator CurrentComparison;
 
 
         PersistenceObject opslag { get; set; }
@@ -41,7 +40,7 @@ namespace business
             subjectItems = new List<subjectItem>();
             for (int i = 0; i < 15; i++)
             {
-                subjectItem item = new subjectItem { Id = i, Image = "", Text = new String[] { i.ToString() }, SubjectId = subjectId };
+                subjectItem item = new subjectItem { Id = (i/2), Image = "", Text = new String[] { (i/2).ToString() }, SubjectId = subjectId };
                 subjectItems.Add(item);
             }
             for (int i = 0; i < 15; i++)//sjuffel array
@@ -57,7 +56,7 @@ namespace business
             }
             state = State.SRankCreating;
             subjectItemsIterator = 0;
-            subRankings = [];
+            subRankings = new List<Subranking>();
         }
 
 
@@ -76,7 +75,7 @@ namespace business
             }
             else if (state == State.Merging)
             {
-                return new subjectItem[2] { MergeSource1.rankedHighToLow[Source1Iterator].itemsThisRanking[Source1RPIterator], MergeSource2.rankedHighToLow[Source2Iterator].itemsThisRanking[Source2RPIterator] };
+                return CurrentComparison.GiveOptions();
             }
             else if (state == State.finished) {
                 return null;
@@ -129,57 +128,38 @@ namespace business
             }
             else if (state == State.Merging)
             {
-                //if the current newest item in this subranking was previously tied whith the thing that we Add now, then we need to tie them again.
-                RankingPlace winningheapplace = MergeSource1.rankedHighToLow[Source1Iterator];
-                int winningheap = 1;
-                if (MergeSource2.rankedHighToLow[Source2Iterator].itemsThisRanking[Source2RPIterator] == ranked[0])
+                CurrentComparison.propagateWinner(ranked[0]);
+                
+                if (CurrentComparison.done)
                 {
-                    winningheapplace = MergeSource2.rankedHighToLow[Source2Iterator];
-                    winningheap = 2;
-                }
-                if (creatieRuimte.rankedHighToLow.Count != 0 && winningheapplace.itemsThisRanking.Contains(creatieRuimte.rankedHighToLow[creatieRuimte.rankedHighToLow.Count - 1].itemsThisRanking[0]))//0 is good here
-                {   //yes inser here to make a tie, while not creating an new ranking place
-                    creatieRuimte.rankedHighToLow[creatieRuimte.rankedHighToLow.Count - 1].itemsThisRanking.Add(ranked[0]);
-                }
-                else
-                {
-                    RankingPlace newone = new RankingPlace();
-                    newone.itemsThisRanking.Add(ranked[0]);
-                    creatieRuimte.rankedHighToLow.Add(newone);
-                }
-                if(winningheap == 1)
-                {
-                    if(winningheapplace.itemsThisRanking.Count -1 == Source1RPIterator)
+                    creatieRuimte.rankedHighToLow.AddRange(CurrentComparison.RankedReturn().Take(CurrentComparison.RankedReturn().Count-1));
+                    if(CurrentComparison.LosingStack() == 2)
                     {
-                        Source1RPIterator = 0;
                         Source1Iterator++;
+                        MergeSource2.rankedHighToLow[Source2Iterator] = CurrentComparison.RankedReturn().TakeLast(1).ToArray()[0];   //in case of tied list reduction
                         if (Source1Iterator == MergeSource1.rankedHighToLow.Count)//no need to ask anymore for this merge, we know the result
                         {
                             creatieRuimte.rankedHighToLow.AddRange(MergeSource2.rankedHighToLow.Skip(Source2Iterator));
                             FinishMergingStepAndNew();
                         }
+                        else
+                        {
+                            CurrentComparison = new DirectComparator(MergeSource1.rankedHighToLow[Source1Iterator], MergeSource2.rankedHighToLow[Source2Iterator]);
+                        }
                     }
                     else
                     {
-                        Source1RPIterator++;
-                    }
-                }
-                else
-                {
-                    if (winningheapplace.itemsThisRanking.Count-1 == Source2RPIterator)
-                    {
-                        Source2RPIterator = 0;
                         Source2Iterator++;
+                        MergeSource1.rankedHighToLow[Source1Iterator] = CurrentComparison.RankedReturn().TakeLast(1).ToArray()[0];
                         if (Source2Iterator == MergeSource2.rankedHighToLow.Count)//no need to ask anymore for this merge, we know the result
                         {
                             creatieRuimte.rankedHighToLow.AddRange(MergeSource1.rankedHighToLow.Skip(Source1Iterator));
                             FinishMergingStepAndNew();
                         }
-                    }
-                    else
-                    {
-                        Source2RPIterator++;
-
+                        else
+                        {
+                            CurrentComparison = new DirectComparator(MergeSource1.rankedHighToLow[Source1Iterator], MergeSource2.rankedHighToLow[Source2Iterator]);
+                        }
                     }
                 }
             }
@@ -199,16 +179,14 @@ namespace business
             if(subRankings.Count == 1)
             {
                 state = State.finished;
-
                 return;
             }
             creatieRuimte = new Subranking();
             Source1Iterator = 0;
             Source2Iterator = 0;
-            Source1RPIterator = 0;
-            Source2RPIterator = 0;
             MergeSource1 = subRankings[subRankingIndex % subRankings.Count];
             MergeSource2 = subRankings[(subRankingIndex+1)% subRankings.Count];
+            CurrentComparison = new DirectComparator(MergeSource1.rankedHighToLow[Source1Iterator], MergeSource2.rankedHighToLow[Source2Iterator]);
         }
 
         public List<RankingItem> GetFinalRankedList()
