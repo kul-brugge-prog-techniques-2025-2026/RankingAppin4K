@@ -128,39 +128,46 @@ namespace business
             }
             else if (state == State.Merging)
             {
-                CurrentComparison.propagateWinner(ranked[0]);
+                CurrentComparison.propagateWinner(ranked[0], tied);
                 
                 if (CurrentComparison.done)
                 {
                     creatieRuimte.rankedHighToLow.AddRange(CurrentComparison.RankedReturn().Take(CurrentComparison.RankedReturn().Count-1));
-                    if(CurrentComparison.LosingStack() == 2)
+                    if(CurrentComparison.reapearing() == false)
                     {
                         Source1Iterator++;
-                        MergeSource2.rankedHighToLow[Source2Iterator] = CurrentComparison.RankedReturn().TakeLast(1).ToArray()[0];   //in case of tied list reduction
-                        if (Source1Iterator == MergeSource1.rankedHighToLow.Count)//no need to ask anymore for this merge, we know the result
-                        {
-                            creatieRuimte.rankedHighToLow.AddRange(MergeSource2.rankedHighToLow.Skip(Source2Iterator));
-                            FinishMergingStepAndNew();
-                        }
-                        else
-                        {
-                            CurrentComparison = new DirectComparator(MergeSource1.rankedHighToLow[Source1Iterator], MergeSource2.rankedHighToLow[Source2Iterator]);
-                        }
+                        Source2Iterator++;
                     }
                     else
                     {
-                        Source2Iterator++;
-                        MergeSource1.rankedHighToLow[Source1Iterator] = CurrentComparison.RankedReturn().TakeLast(1).ToArray()[0];
-                        if (Source2Iterator == MergeSource2.rankedHighToLow.Count)//no need to ask anymore for this merge, we know the result
+                        if (CurrentComparison.LosingStack() == 2)
                         {
-                            creatieRuimte.rankedHighToLow.AddRange(MergeSource1.rankedHighToLow.Skip(Source1Iterator));
-                            FinishMergingStepAndNew();
+                            Source1Iterator++;
+                            MergeSource2.rankedHighToLow[Source2Iterator] = CurrentComparison.RankedReturn().TakeLast(1).ToArray()[0];
                         }
                         else
                         {
-                            CurrentComparison = new DirectComparator(MergeSource1.rankedHighToLow[Source1Iterator], MergeSource2.rankedHighToLow[Source2Iterator]);
+                            Source2Iterator++;
+                            MergeSource1.rankedHighToLow[Source1Iterator] = CurrentComparison.RankedReturn().TakeLast(1).ToArray()[0];
                         }
                     }
+                    if (Source1Iterator == MergeSource1.rankedHighToLow.Count)//no need to ask anymore for this merge, we know the result
+                    {
+                        creatieRuimte.rankedHighToLow.AddRange(MergeSource2.rankedHighToLow.Skip(Source2Iterator));
+                        FinishMergingStepAndNew();
+                    }
+                    else
+
+                    if (Source2Iterator == MergeSource2.rankedHighToLow.Count)//no need to ask anymore for this merge, we know the result
+                    {
+                        creatieRuimte.rankedHighToLow.AddRange(MergeSource1.rankedHighToLow.Skip(Source1Iterator));
+                        FinishMergingStepAndNew();
+                    }
+                    else
+                    {
+                        CurrentComparison = new DirectComparator(MergeSource1.rankedHighToLow[Source1Iterator], MergeSource2.rankedHighToLow[Source2Iterator]);
+                    }
+
                 }
             }
             else if (state == State.finished)
@@ -172,6 +179,7 @@ namespace business
             subRankings.Add(creatieRuimte);
             subRankings.Remove(MergeSource1);
             subRankings.Remove(MergeSource2);
+            subRankingIndex += 2;
             PrepareMergingStep();
         }
         void PrepareMergingStep()
