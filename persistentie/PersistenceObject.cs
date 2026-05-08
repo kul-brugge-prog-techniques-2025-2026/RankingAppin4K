@@ -80,7 +80,7 @@ namespace persistentie
             return res?.RankedItems ?? new List<RankingItem>();
         }
 
-        public void saveRanking(string name, int subjectId, subjectItem[] rankedList)
+        public void saveRanking(string name, int subjectId, List<RankingItem> rankedList)   //Dit moet rankingitem zijn omdat er in het eindresultaat nogsteeds gelijke posities kunnen zitten.
         {
             string[] existingFiles = Directory.GetFiles(rankingsFolder, "ranking_*.json");
             int newId = 1;

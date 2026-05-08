@@ -1,11 +1,6 @@
 ﻿using Models;
 using persistentie;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.ComponentModel.DataAnnotations;
 
 namespace business
 {
@@ -27,9 +22,11 @@ namespace business
         Subranking MergeSource2;
         int Source1Iterator;
         int Source2Iterator; 
-        int subRankingIndex;    //current index in the subranking, the sources are based on this one.
+        int Mergingcounter;    //how many merges have happened
         DirectComparator CurrentComparison;
 
+        int worstcaseComparisonsNeeded;
+        List<Int32> WorstCaseMergeSteps;
 
         PersistenceObject opslag { get; set; }
         int subjectId { get; set; }
@@ -39,10 +36,23 @@ namespace business
             opslag = persistence;
             subjectId = subjectId;
             r = new Random();
+            subjectItems = opslag.GetSubjectItems(subjectId);
+            if(subjectItems.Count <= 1)
+            {
+                throw new Exception() { Source = "Er moet meer dan 1 item zijn" };
+            }
+            state = State.SRankCreating;
+            subjectItemsIterator = 0;
+            subRankings = new List<Subranking>();
+        }
+        public Business()//test initialisation
+        {
+            subjectId = 0;
+            r = new Random();
             subjectItems = new List<subjectItem>();
             for (int i = 0; i < 15; i++)
             {
-                subjectItem item = new subjectItem { Id = (i/2), Image = "", Text = new String[] { (i/2).ToString() }, SubjectId = subjectId };
+                subjectItem item = new subjectItem { Id = (i / 2), Image = "", Text = new String[] { (i / 2).ToString() }, SubjectId = subjectId };
                 subjectItems.Add(item);
             }
             for (int i = 0; i < 15; i++)//sjuffel array
@@ -52,16 +62,10 @@ namespace business
                 subjectItems[rand] = subjectItems[i];
                 subjectItems[i] = temp;
             }
-            if(subjectItems.Count <= 1)
-            {
-                throw new Exception() { Source = "Er moet meer dan 1 item zijn" };
-            }
             state = State.SRankCreating;
             subjectItemsIterator = 0;
             subRankings = new List<Subranking>();
         }
-        public Business()
-
 
         public subjectItem[] Give_options()
         {
@@ -125,7 +129,7 @@ namespace business
                         subRankings.Add(subranking);
                     }
                     state = State.Merging;
-                    subRankingIndex = 0;
+                    Mergingcounter = 0;
                     PrepareMergingStep();
                 }
             }
@@ -177,12 +181,13 @@ namespace business
             {
             }
         }
+
         void FinishMergingStepAndNew()
         {
             subRankings.Add(creatieRuimte);
             subRankings.Remove(MergeSource1);
             subRankings.Remove(MergeSource2);
-            subRankingIndex += 2;
+            Mergingcounter++;
             PrepareMergingStep();
         }
         void PrepareMergingStep()
@@ -195,9 +200,25 @@ namespace business
             creatieRuimte = new Subranking();
             Source1Iterator = 0;
             Source2Iterator = 0;
-            MergeSource1 = subRankings[subRankingIndex % subRankings.Count];
-            MergeSource2 = subRankings[(subRankingIndex+1)% subRankings.Count];
+            MergeSource1 = subRankings[0];
+            MergeSource2 = subRankings[1];
             CurrentComparison = new DirectComparator(MergeSource1.rankedHighToLow[Source1Iterator], MergeSource2.rankedHighToLow[Source2Iterator]);
+        }
+        public double getCompletionPersentage()
+        {
+            if (state == State.SRankCreating)
+            {
+                return (double)(subjectItemsIterator / 2) / worstcaseComparisonsNeeded;
+            }
+            else if (state == State.Merging)
+            {
+                return WorstCaseMergeSteps[Mergingcounter]+ ((Source1Iterator+Source2Iterator)/ worstcaseComparisonsNeeded);
+            }
+            else if (state == State.finished)
+            {
+                return 100;
+            }
+            return 0;
         }
 
         public List<RankingItem> GetFinalRankedList()
@@ -220,13 +241,12 @@ namespace business
             return list;
         }
 
-        public ComparedRankingResult[] Compare()
-        {
-            return new ComparedRankingResult[0];
-        }
-
         public void SaveCurrent(string userName)
         {
+            RankingResult result = new RankingResult() {Name = userName};
+            result.RankedItems = GetFinalRankedList();
+            result.SubjectId = subjectId;
+            opslag.saveRanking(userName, subjectId, GetFinalRankedList());
 
         }
 
@@ -236,24 +256,41 @@ namespace business
         }
 
 
-        public ComparedRankingResult Compare(RankingResult r)
+        public double Compare(RankingResult r, RankingResult r2)
         {
-
             List<RankingItem> ri = opslag.GetRankingItemsForResult(r.Id);
-            List<RankingItem> ownList = GetFinalRankedList();
-            if (ri.Count != ownList.Count)    //check ook nog voor zelfde categorie
+            List<RankingItem> ri2 = opslag.GetRankingItemsForResult(r2.Id);
+            if (ri.Count != ri2.Count)    //check ook nog voor zelfde categorie
             {
                 throw new Exception();//niet zelfde onderwerp, of de rankschikking is nog niet klaar
             }
-            var ownpositions = (from item in ownList select item.Rank).ToArray();
+            var comparingpositions2 = (from item in ri2 select item.Rank).ToArray();
             var comparingpositions = (from item in ri select item.Rank).ToArray();
-            var ownIds = (from item in ri select item.Id).ToArray();
+            var comparingIds2 = (from item in ri select item.Id).ToArray();
             var comparingIds = (from item in ri select item.Id).ToArray();
-            double similairty = compareResults(ownpositions, ownIds, comparingpositions, comparingIds, ownList.Count);
-            return new ComparedRankingResult() { Id = r.Id, Name = r.Name, SimilarityRate = similairty, SubjectId = r.SubjectId };
+            double similairty = compareResults(comparingpositions2, comparingIds2, comparingpositions, comparingIds, ri2.Count,comparingpositions.Last(), comparingpositions2.Last());
+            return  similairty;
             
         }
+        public void comparisonsNeeded(int items)
+        {
+            int total = 0;
+            int i = 0;
+            List<Int32> GroupSizes = new List<int>();
+            total += items / 2; //floor
+            WorstCaseMergeSteps.Add(total);
+            while (GroupSizes.Count != 1)
+            {
+                total += GroupSizes[i % GroupSizes.Count] + GroupSizes[i + 1 % GroupSizes.Count] - 1;
+                WorstCaseMergeSteps.Add(total);
+                int newsize = GroupSizes[i % GroupSizes.Count] + GroupSizes[i + 1 % GroupSizes.Count];
+                GroupSizes.RemoveRange(i % GroupSizes.Count, 2);
+                GroupSizes.Add(newsize);
+                i += 2;
+            }
+            worstcaseComparisonsNeeded = total;
+        }
         [DllImport("MyCppLib.dll")]
-        public static extern double compareResults(int[] positions1, int[] positions2, int[] ids1, int[] ids2, int length);
+        public static extern double compareResults(int[] positions1, int[] positions2, int[] ids1, int[] ids2, int length, int maxranking1, int maxranking2);
     }
 }
