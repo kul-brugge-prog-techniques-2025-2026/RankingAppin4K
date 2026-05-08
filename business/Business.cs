@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.ComponentModel.DataAnnotations;
 
 namespace business
 {
@@ -58,6 +60,7 @@ namespace business
             subjectItemsIterator = 0;
             subRankings = new List<Subranking>();
         }
+        public Business()
 
 
         public subjectItem[] Give_options()
@@ -233,6 +236,24 @@ namespace business
         }
 
 
-        public double compareRanking()
+        public ComparedRankingResult Compare(RankingResult r)
+        {
+
+            List<RankingItem> ri = opslag.GetRankingItemsForResult(r.Id);
+            List<RankingItem> ownList = GetFinalRankedList();
+            if (ri.Count != ownList.Count)    //check ook nog voor zelfde categorie
+            {
+                throw new Exception();//niet zelfde onderwerp, of de rankschikking is nog niet klaar
+            }
+            var ownpositions = (from item in ownList select item.Rank).ToArray();
+            var comparingpositions = (from item in ri select item.Rank).ToArray();
+            var ownIds = (from item in ri select item.Id).ToArray();
+            var comparingIds = (from item in ri select item.Id).ToArray();
+            double similairty = compareResults(ownpositions, ownIds, comparingpositions, comparingIds, ownList.Count);
+            return new ComparedRankingResult() { Id = r.Id, Name = r.Name, SimilarityRate = similairty, SubjectId = r.SubjectId };
+            
+        }
+        [DllImport("MyCppLib.dll")]
+        public static extern double compareResults(int[] positions1, int[] positions2, int[] ids1, int[] ids2, int length);
     }
 }
