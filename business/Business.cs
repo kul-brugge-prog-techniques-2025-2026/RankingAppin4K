@@ -231,5 +231,8 @@ namespace business
         {
             return null;
         }
+
+
+        public double compareRanking()
     }
 }
