@@ -1,19 +1,4 @@
 {
-  "Categories": [
-    { "Id": 0, "Name": "Pils" },
-    { "Id": 1, "Name": "Blond" },
-    { "Id": 2, "Name": "Tripel" },
-    { "Id": 3, "Name": "Dubbel" },
-    { "Id": 4, "Name": "Quadrupel" },
-    { "Id": 5, "Name": "Bruin" },
-    { "Id": 6, "Name": "IPA" },
-    { "Id": 7, "Name": "Weizen" },
-    { "Id": 8, "Name": "Wit" },
-    { "Id": 9, "Name": "Bock" },
-    { "Id": 10, "Name": "Stout" },
-    { "Id": 11, "Name": "Fruit" },
-    { "Id": 12, "Name": "Speciaal" }
-  ],
   "Items": [
     { "Id": 1, "SubjectId": 2, "Name": ["Bierista"], "Category": [12], "Photo": "images/beers/bierista.jpg" },
     { "Id": 2, "SubjectId": 2, "Name": ["Two Chefs Brewing - Funky Falcon"], "Category": [6], "Photo": "images/beers/funky-falcon.jpg" },

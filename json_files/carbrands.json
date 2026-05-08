@@ -1,21 +1,4 @@
 {
-  "Categories": [
-    { "Id": 0, "Name": "Italy" },
-    { "Id": 1, "Name": "China" },
-    { "Id": 2, "Name": "France" },
-    { "Id": 3, "Name": "United Kingdom" },
-    { "Id": 4, "Name": "Germany" },
-    { "Id": 5, "Name": "USA" },
-    { "Id": 6, "Name": "Spain" },
-    { "Id": 7, "Name": "Romania" },
-    { "Id": 8, "Name": "Netherlands" },
-    { "Id": 9, "Name": "Japan" },
-    { "Id": 10, "Name": "South Korea" },
-    { "Id": 11, "Name": "Sweden" },
-    { "Id": 12, "Name": "Switzerland" },
-    { "Id": 13, "Name": "Czechia" },
-    { "Id": 14, "Name": "Vietnam" }
-  ],
   "Items": [
     { "Id": 1, "SubjectId": 1, "Name": ["Abarth"], "Category": [0], "Photo": "images/carbrands/abarth.jpg" },
     { "Id": 2, "SubjectId": 1, "Name": ["Aiways"], "Category": [1], "Photo": "images/carbrands/aiways.jpg" },

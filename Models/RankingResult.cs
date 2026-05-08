@@ -9,6 +9,8 @@ namespace Models
         public int Id { get; set; }
         public int SubjectId { get; set; }
         public required string Name { get; set; }
+
+        public List<RankingItem> RankedItems { get; set; } = new List<RankingItem>();
     }
 
     public class RankedItemDisplay
@@ -20,6 +22,6 @@ namespace Models
 
     public class ComparedRankingResult : RankingResult
     {
-        public List<RankedItemDisplay> RankedItems { get; set; } = new List<RankedItemDisplay> ();
+        public double SimilarityRate { get; set; }
     }
 }

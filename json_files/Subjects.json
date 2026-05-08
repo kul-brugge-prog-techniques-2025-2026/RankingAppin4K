@@ -1,0 +1,46 @@
+{
+    "Subjects" : [
+        {
+            "Id" : 1,
+            "Name" : "Carbrands",
+            "Photo" : "carbrand",
+            "Categories" : [
+                { "Id": 0, "Name": "Italy" },
+                { "Id": 1, "Name": "China" },
+                { "Id": 2, "Name": "France" },
+                { "Id": 3, "Name": "United Kingdom" },
+                { "Id": 4, "Name": "Germany" },
+                { "Id": 5, "Name": "USA" },
+                { "Id": 6, "Name": "Spain" },
+                { "Id": 7, "Name": "Romania" },
+                { "Id": 8, "Name": "Netherlands" },
+                { "Id": 9, "Name": "Japan" },
+                { "Id": 10, "Name": "South Korea" },
+                { "Id": 11, "Name": "Sweden" },
+                { "Id": 12, "Name": "Switzerland" },
+                { "Id": 13, "Name": "Czechia" },
+                { "Id": 14, "Name": "Vietnam" }
+            ]
+        },
+        {
+            "Id" : 2,
+            "Name" : "Beerbrands",
+            "Photo" : "beerbrand",
+            "Categories" : [
+                { "Id": 0, "Name": "Pils" },
+                { "Id": 1, "Name": "Blond" },
+                { "Id": 2, "Name": "Tripel" },
+                { "Id": 3, "Name": "Dubbel" },
+                { "Id": 4, "Name": "Quadrupel" },
+                { "Id": 5, "Name": "Bruin" },
+                { "Id": 6, "Name": "IPA" },
+                { "Id": 7, "Name": "Weizen" },
+                { "Id": 8, "Name": "Wit" },
+                { "Id": 9, "Name": "Bock" },
+                { "Id": 10, "Name": "Stout" },
+                { "Id": 11, "Name": "Fruit" },
+                { "Id": 12, "Name": "Speciaal" }
+            ]
+        }
+    ]
+}

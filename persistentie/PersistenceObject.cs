@@ -8,10 +8,12 @@ namespace persistentie
 {
     public class PersistenceObject
     {
-        private string resultFilePath = "";
-        private string itemsFilePath = "";
-        private string subjectFilePath = "";
-        private string subjectItemsFilePath = "";
+        private string subjectFilePath = "subjects.json";
+
+        private string rankingsFolder = AppDomain.CurrentDomain.BaseDirectory;
+
+        private class SubjectsWrappper { public List<Subject> Subjects { get; set; } }
+        private class ItemsWrapper { public List<subjectItem> Items { get; set; } }
 
         //Alle thema's ophalen
         public List<Subject> Give_all_subjects()
@@ -20,94 +22,96 @@ namespace persistentie
             //Lees volledig bestand uit
             string json = File.ReadAllText(subjectFilePath);
             //converteer de tekst naar list van subjects
-            return JsonSerializer.Deserialize<List<Subject>>(json);
+            var wrapper = JsonSerializer.Deserialize<SubjectsWrappper>(json);
+            return wrapper?.Subjects ?? new List<Subject>();
         }
 
         //Alle items voor specifieke categorie ophalen
         public List<subjectItem> GetSubjectItems(int subjectId)
         {
-            if (!File.Exists(subjectItemsFilePath)) return new List<subjectItem>();
+            var subject = Give_all_subjects().FirstOrDefault(s => s.Id == subjectId);
 
-            string json = File.ReadAllText(subjectItemsFilePath);
-            var allItems = JsonSerializer.Deserialize<List<subjectItem>>(json);
-            return allItems.Where(i => i.SubjectId == subjectId).ToList();
+            if (subject == null) return new List<subjectItem>();
+
+            string specificFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{subject.Name}.json");
+
+            if (!File.Exists(specificFileName)) return new List<subjectItem>();
+
+            string json = File.ReadAllText(specificFileName);
+            var wrapper = JsonSerializer.Deserialize<ItemsWrapper>(json);
+
+            return wrapper?.Items ?? new List<subjectItem>();
         }
 
         //Haalt alle opgeslagen rankings op voor een categorie
-        public List<RankingResult> retrieve_rankings(int SubjectId)
+        public List<RankingResult> retrieve_rankings(int subjectId)
         {
-            if (!File.Exists(resultFilePath)) return new List<RankingResult>();
+            List<RankingResult> results = new List<RankingResult>();
 
-            string resultsJson = File.ReadAllText(resultFilePath);
-            List<RankingResult> allResults = JsonSerializer.Deserialize<List<RankingResult>>(resultsJson);
+            string[] files = Directory.GetFiles(rankingsFolder, "ranking_*.json");
 
-            //Filtert alle rankings zodat enkel de resultaten met de categorie overschiet
-            List<RankingResult> filteredResults = allResults
-                .Where(r => r.SubjectId == SubjectId)
-                .ToList();
+            foreach (string file in files)
+            {
+                try
+                {
+                    string json = File.ReadAllText(file);
+                    RankingResult res = JsonSerializer.Deserialize<RankingResult>(json);
 
-            return filteredResults;
+                    if (res != null && res.SubjectId == subjectId)
+                    {
+                        results.Add(res);
+                    }
+                }
+                catch (Exception) { }
+            }
+            return results;
         }
 
         //Haalt de specifieke rank op van één sessie
         public List<RankingItem> GetRankingItemsForResult(int rankingResultId)
         {
-            if (!File.Exists(itemsFilePath)) return new List<RankingItem>();
+            string fileName = Path.Combine(rankingsFolder, $"ranking_{rankingResultId}.json");
 
-            string ItemsJson = File.ReadAllText(itemsFilePath);
-            List<RankingItem> allItems = JsonSerializer.Deserialize<List<RankingItem>>(ItemsJson);
+            if (!File.Exists(fileName)) return new List<RankingItem>();
 
-            return allItems.Where(i => i.RankingResultId == rankingResultId).ToList();
+            string json = File.ReadAllText(fileName);
+            RankingResult res = JsonSerializer.Deserialize<RankingResult>(json);
+
+            return res?.RankedItems ?? new List<RankingItem>();
         }
 
         public void saveRanking(string name, int subjectId, subjectItem[] rankedList)
         {
-            List<RankingResult> allResults = new List<RankingResult>();
-            if (File.Exists(resultFilePath) )
+            string[] existingFiles = Directory.GetFiles(rankingsFolder, "ranking_*.json");
+            int newId = 1;
+            if (existingFiles.Length > 0)
             {
-                string resultsJson = File.ReadAllText(resultFilePath);
-                allResults = JsonSerializer.Deserialize<List<RankingResult>>(resultsJson) ?? new List<RankingResult>();
+                newId = existingFiles.Length + 1;
             }
-
-            //bep nieuwe id auto increment
-            int newResultId = allResults.Count > 0 ? allResults.Max(r => r.Id) + 1 : 1;
 
             RankingResult newResult = new RankingResult
             {
-                Id = newResultId,
+                Id = newId,
                 SubjectId = subjectId,
-                Name = name
+                Name = name,
+                RankedItems = new List<RankingItem>()
             };
 
-            allResults.Add(newResult);
-            string updatedResultJson = JsonSerializer.Serialize(allResults, new JsonSerializerOptions { WriteIndented = true }); 
-            File.WriteAllText(resultFilePath, updatedResultJson);
-
-            List<RankingItem> allRankingItems = new List<RankingItem>();
-            if (File.Exists(itemsFilePath))
+            for (int i = 0; i < rankedList.Length; i++ )
             {
-                string itemsJson = File.ReadAllText(itemsFilePath);
-                allRankingItems = JsonSerializer.Deserialize<List<RankingItem>>(itemsJson) ?? new List<RankingItem>();
-            }
-
-            int nextItemId = allRankingItems.Count > 0 ? allRankingItems.Max(i => i.Id) + 1 : 1;
-
-            for (int i = 0; i < rankedList.Length; i++)
-            {
-                RankingItem rankingEntry = new RankingItem
+                newResult.RankedItems.Add(new RankingItem
                 {
-                    Id = nextItemId,
-                    RankingResultId = newResultId,
+                    Id = i + 1,
                     subjectItemId = rankedList[i].Id,
+                    RankingResultId = newId,
                     Rank = i + 1
-                };
-
-                allRankingItems.Add(rankingEntry);
-                nextItemId++;
+                });
             }
 
-            string updateItemJson = JsonSerializer.Serialize(allRankingItems, new JsonSerializerOptions { WriteIndented = true });
-            File.WriteAllText(itemsFilePath, updateItemJson);
+            string jsonString = JsonSerializer.Serialize(newResult, new JsonSerializerOptions { WriteIndented = true });
+
+            string fileName = Path.Combine(rankingsFolder, $"ranking_{newId}.json");
+            File.WriteAllText(fileName, jsonString);
         }
     }
 }
