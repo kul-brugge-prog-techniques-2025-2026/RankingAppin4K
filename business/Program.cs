@@ -12,7 +12,7 @@ namespace business
         }
 
         public static void Main(string[] args) {
-            Business bi = new Business(1, null);
+            Business bi = new Business();
             subjectItem[] items;
             while( (items = bi.Give_options())!= null)
             {
@@ -20,7 +20,6 @@ namespace business
                     items = new subjectItem[] { items[1], items[0] };
                 bi.Give_result(items, false);
             }
-            ;
             foreach(var item in bi.GetFinalRankedList())
             {
                 Console.WriteLine($"{item.Rank}: {item.subjectitem.Text[0]}");

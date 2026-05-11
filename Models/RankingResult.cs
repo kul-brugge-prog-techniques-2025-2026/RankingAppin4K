@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Models
 {
@@ -9,7 +10,7 @@ namespace Models
         public int Id { get; set; }
         public int SubjectId { get; set; }
         public required string Name { get; set; }
-
+        [JsonIgnore]
         public List<RankingItem> RankedItems { get; set; } = new List<RankingItem>();
     }
 

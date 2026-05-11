@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 
-namespace persistentie
+namespace persistentie//guys i think my ai is broken
 {
     public class PersistenceObject
     {
-        private string subjectFilePath = "subjects.json";
+        private string subjectFilePath = "json_files/Subjects.json";
 
         private string rankingsFolder = AppDomain.CurrentDomain.BaseDirectory;
 
@@ -18,7 +18,7 @@ namespace persistentie
         //Alle thema's ophalen
         public List<Subject> Give_all_subjects()
         {
-            if (!File.Exists(subjectFilePath)) return new List<Subject>();
+            if (!File.Exists(subjectFilePath)) return new List<Subject>();  
             //Lees volledig bestand uit
             string json = File.ReadAllText(subjectFilePath);
             //converteer de tekst naar list van subjects
@@ -97,7 +97,7 @@ namespace persistentie
                 RankedItems = new List<RankingItem>()
             };
 
-            for (int i = 0; i < rankedList.Length; i++ )
+            for (int i = 0; i < rankedList.Count; i++ )
             {
                 newResult.RankedItems.Add(new RankingItem
                 {
