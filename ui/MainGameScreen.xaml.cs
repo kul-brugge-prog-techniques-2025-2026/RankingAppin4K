@@ -61,9 +61,18 @@ namespace ui
 
         private void UpdateProgress()
         {
-            //vooruitgang van de ranking
-            pbProgress.Value = _business.getCompletionPersentage();
-            txtProgress.Text = $"{Math.Round(pbProgress.Value, 0)}";
+            //double progress = _business.getCompletionPersentage();
+
+            //if (!double.IsNaN(progress) && !double.IsInfinity(progress))
+            //{
+            //    pbProgress.Value = progress;
+            //    txtProgress.Text = $"{Math.Round(progress, 0)}";
+            //}
+            //else
+            //{
+            //    pbProgress.Value = 0;
+            //    txtProgress.Text = "0%";
+            //}
         }
 
         private void btnOptionA_Click(object sender, RoutedEventArgs e)
@@ -94,22 +103,26 @@ namespace ui
 
         private void LoadFilters()
         {
-            //Haalt alle items op via de persistence pointer om de categorieen te bepalen
-            var items = _persistence.Get_subjectItems(_subjectId);
-            //Haalt alle categorieen op en filtert dubbels weg
-            var categories = items.SelectMany(i => i.Text).Distinct().Skip(1);
+            var subjects = _persistence.Give_all_subjects();
+            
+            var currentSubject = subjects.FirstOrDefault(s => s.Id == _subjectId);
 
-            foreach (var category in categories)
+            if (currentSubject != null && currentSubject.Categories != null)
             {
-                //Maakt voor elke categorie een nieuwe checkbox aan
-                CheckBox cb = new CheckBox {
-                    Content = category, 
-                    Margin = new Thickness(5), 
-                    IsChecked = true
-                };
-                wpFilters.Children.Add(cb);
-            }
+                wpFilters.Children.Clear();
 
+                foreach (var category in currentSubject.Categories)
+                {
+                    CheckBox cb = new CheckBox
+                    {
+                        Content = category.Name,
+                        Tag = category.Id,
+                        Margin = new Thickness(5),
+                        IsChecked = true
+                    };
+                    wpFilters.Children.Add(cb);
+                }
+            }
         }
 
         private void ShowResults()

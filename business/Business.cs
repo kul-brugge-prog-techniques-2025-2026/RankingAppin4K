@@ -1,5 +1,6 @@
 ﻿using Models;
 using persistentie;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace business
@@ -34,13 +35,14 @@ namespace business
         public Business(int subjectId, PersistenceObject persistence)
         {
             opslag = persistence;
-            subjectId = subjectId;
+            this.subjectId = subjectId;
             r = new Random();
-            subjectItems = opslag.GetSubjectItems(subjectId);
+            subjectItems = opslag.Get_SubjectItems(subjectId);
             if(subjectItems.Count <= 1)
             {
                 throw new Exception() { Source = "Er moet meer dan 1 item zijn" };
             }
+            this.WorstCaseMergeSteps = new List<int>();
             state = State.SRankCreating;
             subjectItemsIterator = 0;
             subRankings = new List<Subranking>();
@@ -52,7 +54,7 @@ namespace business
             subjectItems = new List<subjectItem>();
             for (int i = 0; i < 15; i++)
             {
-                subjectItem item = new subjectItem { Id = (i / 2), Image = "", Text = new String[] { (i / 2).ToString() }, SubjectId = subjectId };
+                subjectItem item = new subjectItem { Id = (i / 2), Image = "", Text = new String[] { (i / 2).ToString() }, SubjectId = subjectId, Category = new int[] { 0 } };
                 subjectItems.Add(item);
             }
             for (int i = 0; i < 15; i++)//sjuffel array
@@ -252,7 +254,8 @@ namespace business
 
         public List<Subject> Give_all_subjects()
         {
-            return null;
+            //return null;
+            return opslag.Give_all_subjects();
         }
 
 

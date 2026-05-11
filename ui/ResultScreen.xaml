@@ -43,7 +43,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Border CornerRadius="5" ClipToBounds="True" Margin="2">
-                                            <Image Source="{Binding Image}" Height="60" Width="80" Stretch="UniformToFill"/>
+                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                         </Border>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>

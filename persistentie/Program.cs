@@ -42,7 +42,7 @@ namespace persistentie
 
                 Console.WriteLine($"\n--- Laden van items voor {subjects[0].Name} ---");
 
-                List<subjectItem> items = po.Get_subjectItems(subjectId);
+                List<subjectItem> items = po.Get_SubjectItems(subjectId);
 
                 Console.WriteLine($"Aantal items gevonden: {items.Count}");
 

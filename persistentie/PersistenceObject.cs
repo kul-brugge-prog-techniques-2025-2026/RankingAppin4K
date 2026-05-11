@@ -14,17 +14,49 @@ namespace persistentie
 
         private string rankingsFolder = "savedRankings";
 
+        private string _rootDataPath;
+        private string _rankingsFolder;
+
         private class SubjectsWrapper { public List<Subject> Subjects { get; set; } }
         private class ItemsWrapper { public List<subjectItem> Items { get; set; } }
 
         public PersistenceObject()
         {
-            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+            string currentDir = AppContext.BaseDirectory;
+            string foundPath = null;
 
-            DirectoryInfo projectDir = Directory.GetParent(baseDir).Parent.Parent.Parent;
+            // Zoek maximaal 6 mappen omhoog (voorkomt infinite loops)
+            for (int i = 0; i < 6; i++)
+            {
+                string testPath = Path.Combine(currentDir, "json_files");
+                if (Directory.Exists(testPath))
+                {
+                    foundPath = testPath;
+                    break;
+                }
+                var parent = Directory.GetParent(currentDir);
+                if (parent == null) break;
+                currentDir = parent.FullName;
+            }
 
-            subjectFilePath = Path.Combine(projectDir.FullName, "json_files", "subjects.json");
-            rankingsFolder = Path.Combine(projectDir.FullName, "savedRankings");
+            if (foundPath == null)
+            {
+                throw new FileNotFoundException("De map 'json_files' kon niet worden gevonden. " +
+                    "Zorg dat deze in de projectmap staat of gekopieerd wordt naar de output directory.");
+            }
+
+            _rootDataPath = foundPath;
+            _rankingsFolder = Path.Combine(Directory.GetParent(_rootDataPath).FullName, "savedRankings");
+
+            // Zorg dat de savedRankings map bestaat
+            if (!Directory.Exists(_rankingsFolder)) Directory.CreateDirectory(_rankingsFolder);
+
+            //string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+
+            //DirectoryInfo projectDir = Directory.GetParent(baseDir).Parent.Parent.Parent;
+
+            //subjectFilePath = Path.Combine(projectDir.FullName, "json_files", "subjects.json");
+            //rankingsFolder = Path.Combine(projectDir.FullName, "savedRankings");
         }
 
         //Alle thema's ophalen
@@ -39,7 +71,7 @@ namespace persistentie
         }
 
         //Alle items voor specifieke categorie ophalen
-        public List<subjectItem> Get_subjectItems(int subjectId)
+        public List<subjectItem> Get_SubjectItems(int subjectId)
         {
             var allSubjects = Give_all_subjects();
 
@@ -47,7 +79,8 @@ namespace persistentie
 
             if (currentSubject == null) return new List<subjectItem>();
 
-            string specificFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "json_files",  $"{currentSubject.Name}.json");
+            string subjectsDir = Path.GetDirectoryName(subjectFilePath) ?? AppDomain.CurrentDomain.BaseDirectory;
+            string specificFileName = Path.Combine(subjectsDir, $"{currentSubject.Name}.json");
 
             if (!File.Exists(specificFileName)) return new List<subjectItem>();
 

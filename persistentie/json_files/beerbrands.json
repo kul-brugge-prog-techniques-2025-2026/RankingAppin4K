@@ -1,6 +1,6 @@
 {
   "Items": [
-    { "Id": 1, "SubjectId": 2, "Text": ["Bierista"], "Category": [12], "Image": "images/beers/bierista.jpg" },
+    { "Id": 1, "SubjectId": 2, "Text": ["Bierista"], "Category": [12], "Image": "images/beers/bierista.png" },
     { "Id": 2, "SubjectId": 2, "Text": ["Two Chefs Brewing - Funky Falcon"], "Category": [6], "Image": "images/beers/funky-falcon.jpg" },
     { "Id": 3, "SubjectId": 2, "Text": ["Gouden Carolus - Imperial Dark"], "Category": [4], "Image": "images/beers/carolus-imperial-dark.jpg" },
     { "Id": 4, "SubjectId": 2, "Text": ["Gulpener - Korenwolf"], "Category": [8], "Image": "images/beers/korenwolf.jpg" },
