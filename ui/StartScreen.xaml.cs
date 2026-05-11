@@ -22,14 +22,14 @@ namespace ui
     public partial class StartScreen : UserControl
     {
         //referentie pointer naar business laag
-        private Program _business;
+        private Business _business;
 
         public StartScreen()
         {
             InitializeComponent();
 
             //init bussiness logica
-            _business = new Program();
+            _business = new Business(1, new persistentie.PersistenceObject());
 
             LoadCategories();
         }

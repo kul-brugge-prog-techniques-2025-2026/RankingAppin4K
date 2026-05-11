@@ -32,7 +32,7 @@ namespace ui
             MainContainer.Content = new MainGameScreen(subjectId);
         }
 
-        public void ShowResults(Program business, int subjectId)
+        public void ShowResults(Business business, int subjectId)
         {
             MainContainer.Content = new ResultScreen(business, subjectId);
         }

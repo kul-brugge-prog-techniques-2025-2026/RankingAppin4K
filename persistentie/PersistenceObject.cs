@@ -3,17 +3,29 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using System.IO;
+using System.Linq;
 
-namespace persistentie//guys i think my ai is broken
+namespace persistentie
 {
     public class PersistenceObject
     {
         private string subjectFilePath = "json_files/Subjects.json";
 
-        private string rankingsFolder = AppDomain.CurrentDomain.BaseDirectory;
+        private string rankingsFolder = "savedRankings";
 
-        private class SubjectsWrappper { public List<Subject> Subjects { get; set; } }
+        private class SubjectsWrapper { public List<Subject> Subjects { get; set; } }
         private class ItemsWrapper { public List<subjectItem> Items { get; set; } }
+
+        public PersistenceObject()
+        {
+            string baseDir = AppDomain.CurrentDomain.BaseDirectory;
+
+            DirectoryInfo projectDir = Directory.GetParent(baseDir).Parent.Parent.Parent;
+
+            subjectFilePath = Path.Combine(projectDir.FullName, "json_files", "subjects.json");
+            rankingsFolder = Path.Combine(projectDir.FullName, "savedRankings");
+        }
 
         //Alle thema's ophalen
         public List<Subject> Give_all_subjects()
@@ -22,18 +34,20 @@ namespace persistentie//guys i think my ai is broken
             //Lees volledig bestand uit
             string json = File.ReadAllText(subjectFilePath);
             //converteer de tekst naar list van subjects
-            var wrapper = JsonSerializer.Deserialize<SubjectsWrappper>(json);
+            var wrapper = JsonSerializer.Deserialize<SubjectsWrapper>(json);
             return wrapper?.Subjects ?? new List<Subject>();
         }
 
         //Alle items voor specifieke categorie ophalen
-        public List<subjectItem> GetSubjectItems(int subjectId)
+        public List<subjectItem> Get_subjectItems(int subjectId)
         {
-            var subject = Give_all_subjects().FirstOrDefault(s => s.Id == subjectId);
+            var allSubjects = Give_all_subjects();
 
-            if (subject == null) return new List<subjectItem>();
+            var currentSubject = allSubjects.FirstOrDefault(s => s.Id == subjectId);
 
-            string specificFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{subject.Name}.json");
+            if (currentSubject == null) return new List<subjectItem>();
+
+            string specificFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "json_files",  $"{currentSubject.Name}.json");
 
             if (!File.Exists(specificFileName)) return new List<subjectItem>();
 
@@ -62,7 +76,7 @@ namespace persistentie//guys i think my ai is broken
                         results.Add(res);
                     }
                 }
-                catch (Exception) { }
+                catch { }
             }
             return results;
         }
@@ -80,13 +94,13 @@ namespace persistentie//guys i think my ai is broken
             return res?.RankedItems ?? new List<RankingItem>();
         }
 
-        public void saveRanking(string name, int subjectId, List<RankingItem> rankedList)   //Dit moet rankingitem zijn omdat er in het eindresultaat nogsteeds gelijke posities kunnen zitten.
+        public void saveRanking(string name, int subjectId, List<RankingItem> rankedList)
         {
-            string[] existingFiles = Directory.GetFiles(rankingsFolder, "ranking_*.json");
-            int newId = 1;
-            if (existingFiles.Length > 0)
+            int newId = Directory.GetFiles(rankingsFolder, "ranking_*.json").Length + 1;
+
+            foreach (var item in rankedList)
             {
-                newId = existingFiles.Length + 1;
+                item.RankingResultId = newId;
             }
 
             RankingResult newResult = new RankingResult
@@ -94,19 +108,8 @@ namespace persistentie//guys i think my ai is broken
                 Id = newId,
                 SubjectId = subjectId,
                 Name = name,
-                RankedItems = new List<RankingItem>()
+                RankedItems = rankedList
             };
-
-            for (int i = 0; i < rankedList.Count; i++ )
-            {
-                newResult.RankedItems.Add(new RankingItem
-                {
-                    Id = i + 1,
-                    subjectItemId = rankedList[i].Id,
-                    RankingResultId = newId,
-                    Rank = i + 1
-                });
-            }
 
             string jsonString = JsonSerializer.Serialize(newResult, new JsonSerializerOptions { WriteIndented = true });
 

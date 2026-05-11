@@ -9,6 +9,7 @@ namespace Models
         public int Id { get; set; }
         public int SubjectId { get; set; }
         public required string[] Text { get; set; }
+        public required int[] Category { get; set; }
         public required string Image { get; set; }
     }
 }

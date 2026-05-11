@@ -5,31 +5,31 @@
   "RankedItems": [
     {
       "Id": 1,
-      "subnectItemId": 4,
+      "subjectItemId": 4,
       "RankingResultId": 1,
       "Rank": 1
     },
     {
       "Id": 2,
-      "subnectItemId": 8,
+      "subjectItemId": 8,
       "RankingResultId": 1,
       "Rank": 2
     },
     {
       "Id": 3,
-      "subnectItemId": 39,
+      "subjectItemId": 39,
       "RankingResultId": 1,
       "Rank": 3
     },
     {
       "Id": 4,
-      "subnectItemId": 20,
+      "subjectItemId": 20,
       "RankingResultId": 1,
       "Rank": 4
     },
     {
       "Id": 5,
-      "subnectItemId": 6,
+      "subjectItemId": 6,
       "RankingResultId": 1,
       "Rank": 5
     }

@@ -10,7 +10,7 @@ namespace Models
         public int Id { get; set; }
         public int SubjectId { get; set; }
         public required string Name { get; set; }
-        [JsonIgnore]
+        //[JsonIgnore]
         public List<RankingItem> RankedItems { get; set; } = new List<RankingItem>();
     }
 

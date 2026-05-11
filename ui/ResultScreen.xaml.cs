@@ -20,10 +20,10 @@ namespace ui
     /// </summary>
     public partial class ResultScreen : UserControl
     {
-        private Program _business;
+        private Business _business;
         private int _subjectId;
 
-        public ResultScreen(Program business, int subjectId)
+        public ResultScreen(Business business, int subjectId)
         {
             InitializeComponent();
 
@@ -36,27 +36,27 @@ namespace ui
         private void LoadResults()
         {
             //Vraagt de gesorteerde lijst op aan de business laag
-            List<subjectItem> rankedItems = _business.GetFinalRankedList();
+            List<RankingItem> rankedItems = _business.GetFinalRankedList();
 
             //Maakt tijdelijke lijst voor objecten te tonen op ui
             var displayList = new List<RankedItemDisplay>();
 
             //Iteratie door lijst om data te mappen
-            for (int i = 0; i < rankedItems.Count; i++ )
+            foreach (var item in rankedItems)
             {
                 displayList.Add(new RankedItemDisplay
                 {
-                    Rank = i + 1,
-                    Name = rankedItems[i].Text[0],
-                    Image = AppDomain.CurrentDomain.BaseDirectory + rankedItems[i].Image
+                    Rank = item.Rank + 1,
+                    Name = item.subjectitem.Text[0],
+                    Image = AppDomain.CurrentDomain.BaseDirectory + item.subjectitem.Image
                 });
             }
             //Koppel de gevulde lijst aan de Itemsource van de listview
             lvResultList.ItemsSource = displayList;
 
             //Roep de vergelijkings method op in de business laag
-            ComparedRankingResult[] comparisons = _business.Compare();
-            lvComparison.ItemsSource = comparisons;
+            //ComparedRankingResult[] comparisons = _business.Compare();
+            //lvComparison.ItemsSource = comparisons;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)

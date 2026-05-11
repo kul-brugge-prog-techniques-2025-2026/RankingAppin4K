@@ -62,6 +62,8 @@ namespace ui
         private void UpdateProgress()
         {
             //vooruitgang van de ranking
+            pbProgress.Value = _business.getCompletionPersentage();
+            txtProgress.Text = $"{Math.Round(pbProgress.Value, 0)}";
         }
 
         private void btnOptionA_Click(object sender, RoutedEventArgs e)
@@ -95,7 +97,7 @@ namespace ui
             //Haalt alle items op via de persistence pointer om de categorieen te bepalen
             var items = _persistence.Get_subjectItems(_subjectId);
             //Haalt alle categorieen op en filtert dubbels weg
-            var categories = items.SelectMany(i => i.Text).Distinct.Skip(1);
+            var categories = items.SelectMany(i => i.Text).Distinct().Skip(1);
 
             foreach (var category in categories)
             {
