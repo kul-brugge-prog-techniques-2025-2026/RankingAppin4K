@@ -61,18 +61,18 @@ namespace ui
 
         private void UpdateProgress()
         {
-            //double progress = _business.getCompletionPersentage();
+            double progress = _business.getCompletionPersentage();
 
-            //if (!double.IsNaN(progress) && !double.IsInfinity(progress))
-            //{
-            //    pbProgress.Value = progress;
-            //    txtProgress.Text = $"{Math.Round(progress, 0)}";
-            //}
-            //else
-            //{
-            //    pbProgress.Value = 0;
-            //    txtProgress.Text = "0%";
-            //}
+            if (!double.IsNaN(progress) && !double.IsInfinity(progress))
+            {
+                pbProgress.Value = progress;
+                txtProgress.Text = $"{Math.Round(progress, 0)}";
+            }
+            else
+            {
+                pbProgress.Value = 0;
+                txtProgress.Text = "0%";
+            }
         }
 
         private void btnOptionA_Click(object sender, RoutedEventArgs e)
@@ -93,6 +93,9 @@ namespace ui
 
         private void btnTie_Click(object sender, RoutedEventArgs e)
         {
+            //bij tie moet bool goed staan bij give result, de rest maakt niet uit
+            subjectItem[] result = { _currentOptions[1], _currentOptions[0] };
+            _business.Give_result(result, true);
             NextRound();
         }
 

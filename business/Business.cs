@@ -46,6 +46,7 @@ namespace business
             state = State.SRankCreating;
             subjectItemsIterator = 0;
             subRankings = new List<Subranking>();
+            comparisonsNeeded(subjectItems.Count);
         }
         public Business()//test initialisation
         {
@@ -186,9 +187,9 @@ namespace business
 
         void FinishMergingStepAndNew()
         {
-            subRankings.Add(creatieRuimte);
             subRankings.Remove(MergeSource1);
             subRankings.Remove(MergeSource2);
+            subRankings.Add(creatieRuimte);
             Mergingcounter++;
             PrepareMergingStep();
         }
@@ -210,11 +211,11 @@ namespace business
         {
             if (state == State.SRankCreating)
             {
-                return (double)(subjectItemsIterator / 2) / worstcaseComparisonsNeeded;
+                return (((double)subjectItemsIterator / 2) / worstcaseComparisonsNeeded)*100;
             }
             else if (state == State.Merging)
             {
-                return WorstCaseMergeSteps[Mergingcounter]+ ((Source1Iterator+Source2Iterator)/ worstcaseComparisonsNeeded);
+                return (((double)WorstCaseMergeSteps[Mergingcounter] + Source1Iterator+Source2Iterator)/ worstcaseComparisonsNeeded) * 100;
             }
             else if (state == State.finished)
             {
@@ -275,21 +276,27 @@ namespace business
             return  similairty;
             
         }
-        public void comparisonsNeeded(int items)
+        public void comparisonsNeeded(int items)//mimics the algorithm to see at which checkpoints (end of merge) we have a certain completion.
         {
             int total = 0;
             int i = 0;
             List<Int32> GroupSizes = new List<int>();
             total += items / 2; //floor
-            WorstCaseMergeSteps.Add(total);
+            WorstCaseMergeSteps.Add(items / 2);
+            while (true)
+            {
+                GroupSizes.Add(2);
+                i += 2;
+                if(i == items) {  break; }
+                if(i == items - 1) { GroupSizes.Add(1); break; }
+            }
             while (GroupSizes.Count != 1)
             {
-                total += GroupSizes[i % GroupSizes.Count] + GroupSizes[i + 1 % GroupSizes.Count] - 1;
+                total += GroupSizes[0] + GroupSizes[1] - 1;
                 WorstCaseMergeSteps.Add(total);
-                int newsize = GroupSizes[i % GroupSizes.Count] + GroupSizes[i + 1 % GroupSizes.Count];
-                GroupSizes.RemoveRange(i % GroupSizes.Count, 2);
+                int newsize = GroupSizes[0] + GroupSizes[1];
+                GroupSizes.RemoveRange(0, 2);
                 GroupSizes.Add(newsize);
-                i += 2;
             }
             worstcaseComparisonsNeeded = total;
         }
