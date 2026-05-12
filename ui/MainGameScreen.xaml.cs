@@ -33,7 +33,7 @@ namespace ui
             //BusinessLayer krijgt subject id en persistence pointer mee, zorgt dat business layer weet welk thema er gerankt wordt
             _business = new Business(_subjectId, _persistence);
 
-            LoadFilters();
+            //LoadFilters();
             NextRound();
         }
 
@@ -66,7 +66,7 @@ namespace ui
             if (!double.IsNaN(progress) && !double.IsInfinity(progress))
             {
                 pbProgress.Value = progress;
-                txtProgress.Text = $"{Math.Round(progress, 0)}";
+                txtProgress.Text = $"{Math.Round(progress, 0)}%";
             }
             else
             {
@@ -102,30 +102,6 @@ namespace ui
         private void btnUndo_Click(object sender, RoutedEventArgs e)
         {
             //Undo functie business laag oproepen
-        }
-
-        private void LoadFilters()
-        {
-            var subjects = _persistence.Give_all_subjects();
-            
-            var currentSubject = subjects.FirstOrDefault(s => s.Id == _subjectId);
-
-            if (currentSubject != null && currentSubject.Categories != null)
-            {
-                wpFilters.Children.Clear();
-
-                foreach (var category in currentSubject.Categories)
-                {
-                    CheckBox cb = new CheckBox
-                    {
-                        Content = category.Name,
-                        Tag = category.Id,
-                        Margin = new Thickness(5),
-                        IsChecked = true
-                    };
-                    wpFilters.Children.Add(cb);
-                }
-            }
         }
 
         private void ShowResults()

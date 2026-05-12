@@ -15,6 +15,7 @@
         <!--Section 1: Save ranking-->
         <Border Grid.Row="0" Background="White" Padding="15" Margin="0,0,0,10">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button x:Name="btnReturnStart" Content="Start new ranking" Click="btnReturnStart_Click" Padding="15,5" Margin="0,0,15,0" Background="LightSalmon" Foreground="White" FontWeight="Bold"/>
                 <TextBlock Text="Name:" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="18" FontWeight="Bold"/>
                 <TextBox x:Name="txtUserName" Width="200" Padding="5" VerticalContentAlignment="Center"/>
                 <Button x:Name="btnSave" Content="Save ranking" Click="btnSave_Click" Padding="15,5" Margin="10,0,0,0" Background="LightGreen" Foreground="White" FontWeight="Bold"/>
@@ -24,7 +25,7 @@
         <!--Section 2: Lists-->
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
@@ -39,7 +40,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Name" Width="100">
+                            <GridViewColumn Header="Name" Width="200">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Border CornerRadius="5" ClipToBounds="True" Margin="2">
@@ -48,7 +49,7 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-                            <GridViewColumn Header="Image" Width="100">
+                            <GridViewColumn Header="Image" Width="130">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Border CornerRadius="5" ClipToBounds="True" Margin="2">

@@ -53,15 +53,5 @@
                 </StackPanel>
             </Button>
         </Grid>
-
-        <!--Section 3: Filter selection-->
-        <Border Grid.Row="2" Background="White" BorderBrush="#DDD" BorderThickness="0,1,0,0" Padding="15">
-            <StackPanel>
-                <TextBlock Text="Categorieen:" FontWeight="Bold" Margin="0,0,0,5"/>
-                <WrapPanel x:Name="wpFilters">
-                    
-                </WrapPanel>
-            </StackPanel>
-        </Border>
     </Grid>
 </UserControl>

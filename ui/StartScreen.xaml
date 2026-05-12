@@ -7,8 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="LightGray">
-        <StackPanel Margin="20">
-            <TextBlock Text="Choose a category" FontSize="20" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="White" Padding="20" BorderBrush="#DDD" BorderThickness="0,0,0,1">
+
+            <TextBlock Text="Choose a category" FontSize="24" FontWeight="Bold" HorizontalAlignment="Center"/>
+        </Border>
+        <Grid Grid.Row="1" Margin="20">
 
             <ListBox x:Name="lbSubjects" SelectionChanged="lbSubjects_SelectionChanged" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
                 <ListBox.ItemsPanel>
@@ -28,6 +39,26 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>                              
-        </StackPanel>            
+        </Grid>
+
+        <Border Grid.Row="2" Background="White" BorderBrush="#DDD" BorderThickness="0,1,0,0" Padding="20">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Subcategories:" FontWeight="Bold" FontSize="12" Margin="0,0,0,10"/>
+                <ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" MaxHeight="120">
+                    <WrapPanel x:Name="wpFilters" Orientation="Horizontal"/>
+                </ScrollViewer>
+            </Grid>
+        </Border>
+
+        <Border Grid.Row="3" Background="White" BorderBrush="#DDD" BorderThickness="0,1,0,0" Padding="20">
+            <Grid>
+                <Button x:Name="btnStartRanking" Content="Start Ranking" Width="200" Height="40" HorizontalAlignment="Center" Click="btnStartRanking_Click" IsEnabled="False"/>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

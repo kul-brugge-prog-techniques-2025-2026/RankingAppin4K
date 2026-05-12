@@ -48,7 +48,7 @@ namespace ui
                 {
                     Rank = item.Rank + 1,
                     Name = item.subjectitem.Text[0],
-                    Image = AppDomain.CurrentDomain.BaseDirectory + item.subjectitem.Image
+                    Image = item.subjectitem.Image
                 });
             }
             //Koppel de gevulde lijst aan de Itemsource van de listview
@@ -84,6 +84,15 @@ namespace ui
                 //Vernieuwt de onderste lijst met een lijst van andere user
                 lvMatchResults.ItemsSource = selectedMatch.RankedItems;
             }     
+        }
+
+        private void btnReturnStart_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow parent = (MainWindow)Window.GetWindow(this);
+            if (parent != null)
+            {
+                parent.MainContainer.Content = new StartScreen();
+            }
         }
     }
 }
