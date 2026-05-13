@@ -55,8 +55,8 @@ namespace ui
             lvResultList.ItemsSource = displayList;
 
             //Roep de vergelijkings method op in de business laag
-            //ComparedRankingResult[] comparisons = _business.Compare();
-            //lvComparison.ItemsSource = comparisons;
+            var savedRankings = _business.GetSavedRankings();
+            lvComparison.ItemsSource = savedRankings;
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -79,10 +79,10 @@ namespace ui
 
         private void lvComparison_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (lvComparison.SelectedItem is ComparedRankingResult selectedMatch)
+            if (lvComparison.SelectedItem is RankingResult selected)
             {
                 //Vernieuwt de onderste lijst met een lijst van andere user
-                lvMatchResults.ItemsSource = selectedMatch.RankedItems;
+                lvMatchResults.ItemsSource = selected.RankedItems;
             }     
         }
 

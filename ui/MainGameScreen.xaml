@@ -33,7 +33,7 @@
             <!--option A-->
             <Button x:Name="btnOptionA" Grid.Column="0" Click="btnOptionA_Click" Margin="10" Background="LightBlue" BorderBrush="Gray">
                 <StackPanel>
-                    <Image x:Name="imageA" Height="400" Stretch="UniformToFill"/>
+                    <Image x:Name="imageA" Height="400" Stretch="Uniform"/>
                     <TextBlock x:Name="textA" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
                 </StackPanel>
             </Button>
@@ -41,14 +41,13 @@
             <!--Middel buttons-->
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                 <TextBlock Text="VS" HorizontalAlignment="Center" FontSize="30" FontWeight="Black" Margin="0, 20" Foreground="Red"/>
-                <Button Content="Undo" Click="btnUndo_Click" Margin="5" Padding="10, 5" Background="White"/>
                 <Button Content="Tie" Click="btnTie_Click" Margin="5" Padding="10, 5" Background="White"/>
             </StackPanel>
 
             <!--option B-->
             <Button x:Name="btnOptionB" Grid.Column="2" Click="btnOptionB_Click"  Margin="10" Background="LightSalmon" BorderBrush="Gray">
                 <StackPanel>
-                    <Image x:Name="imageB" Height="400" Stretch="UniformToFill"/>
+                    <Image x:Name="imageB" Height="400" Stretch="Uniform"/>
                     <TextBlock x:Name="textB" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
                 </StackPanel>
             </Button>

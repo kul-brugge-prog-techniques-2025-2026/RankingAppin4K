@@ -99,11 +99,6 @@ namespace ui
             NextRound();
         }
 
-        private void btnUndo_Click(object sender, RoutedEventArgs e)
-        {
-            //Undo functie business laag oproepen
-        }
-
         private void ShowResults()
         {
             //Gebruikt functie om over te schakelen naar ResultScreen

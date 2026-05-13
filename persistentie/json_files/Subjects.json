@@ -43,15 +43,16 @@
             ]
         },
         {
-        "Id": 3,
-        "Name": "Waifus",
-        "Photo": "waifus",
-        "Categories": [
-            { "Id": 0, "Name": "Blue Archive" },
-            { "Id": 1, "Name": "Girls und Panzer" },
-            { "Id": 2, "Name": "Touhou" },
-            { "Id": 3, "Name": "High School DxD" }
-        ]
+            "Id": 3,
+            "Name": "Waifus",
+            "Photo": "waifus",
+            "Categories": [
+                { "Id": 0, "Name": "Blue Archive" },
+                { "Id": 1, "Name": "Girls und Panzer" },
+                { "Id": 2, "Name": "Touhou" },
+                { "Id": 3, "Name": "High School DxD" },
+                { "Id": 4, "Name": "IDK" }
+            ]
         }
     ]
 }

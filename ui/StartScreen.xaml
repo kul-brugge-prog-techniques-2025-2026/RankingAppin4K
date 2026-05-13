@@ -32,7 +32,7 @@
                     <DataTemplate>
                         <StackPanel Width="200" Margin="15">
                             <Border ClipToBounds="True" Height="100" CornerRadius="10">
-                                <Image Source="{Binding Photo}" Stretch="UniformToFill"/>
+                                <Image Source="{Binding Photo}" Stretch="Uniform"/>
                             </Border>
                             <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" Margin="5"/>
                         </StackPanel>

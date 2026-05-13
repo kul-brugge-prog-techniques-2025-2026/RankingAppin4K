@@ -259,6 +259,31 @@ namespace business
             return opslag.Give_all_subjects();
         }
 
+        public List<RankingResult> GetSavedRankings()
+        {
+            var results = opslag?.retrieve_rankings(subjectId) ?? new List<RankingResult>();
+
+            var lookup = subjectItems.ToDictionary(si => si.Id);
+
+            foreach (var res in results)
+            {
+                foreach (var ri in res.RankedItems)
+                {
+                    if (lookup.TryGetValue(ri.subjectItemId, out var si))
+                    {
+                        ri.subjectitem = si;
+                    }
+                }
+            }
+
+            return results;
+            //return opslag?.retrieve_rankings(subjectId) ?? new List<RankingResult>();
+        }
+
+        public List<RankingItem> GetRankingItemsForResult(int rankingResultId)
+        {
+            return opslag?.GetRankingItemsForResult(rankingResultId) ?? new List<RankingItem>();
+        }
 
         public double Compare(RankingResult r, RankingResult r2)
         {

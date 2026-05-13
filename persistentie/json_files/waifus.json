@@ -1,31 +1,25 @@
 {
   "Items": [
-
     { "Id": 1, "SubjectId": 3, "Text": ["Real girl"], "Category": [4], "Image": "images/waifus/real-girl.png" },
-
     { "Id": 2, "SubjectId": 3, "Text": ["Youmu Konpaku"], "Category": [2], "Image": "images/waifus/youmu-konpaku.jpg" },
     { "Id": 3, "SubjectId": 3, "Text": ["Serika"], "Category": [0], "Image": "images/waifus/serika.png" },
     { "Id": 4, "SubjectId": 3, "Text": ["Rias Gremory"], "Category": [3], "Image": "images/waifus/rias-gremory.jpg" },
     { "Id": 5, "SubjectId": 3, "Text": ["Yukari Akiyama"], "Category": [1], "Image": "images/waifus/yukari-akiyama.jpg" },
-
     { "Id": 6, "SubjectId": 3, "Text": ["Rio"], "Category": [0], "Image": "images/waifus/rio.jpg" },
     { "Id": 7, "SubjectId": 3, "Text": ["Hong Meiling"], "Category": [2], "Image": "images/waifus/hong-meiling.jpg" },
     { "Id": 8, "SubjectId": 3, "Text": ["Akeno Himejima"], "Category": [3], "Image": "images/waifus/akeno-himejima.jpg" },
     { "Id": 9, "SubjectId": 3, "Text": ["Anchovy"], "Category": [1], "Image": "images/waifus/anchovy.jpg" },
     { "Id": 10, "SubjectId": 3, "Text": ["Ichika"], "Category": [0], "Image": "images/waifus/ichika.jpg" },
-
     { "Id": 11, "SubjectId": 3, "Text": ["Marisa Kirisame"], "Category": [2], "Image": "images/waifus/marisa-kirisame.jpg" },
     { "Id": 12, "SubjectId": 3, "Text": ["Asia Argento"], "Category": [3], "Image": "images/waifus/asia-argento.jpg" },
     { "Id": 13, "SubjectId": 3, "Text": ["kay"], "Category": [1], "Image": "images/waifus/kay.jpg" },
     { "Id": 14, "SubjectId": 3, "Text": ["Yuuka"], "Category": [0], "Image": "images/waifus/yuuka.jpg" },
     { "Id": 15, "SubjectId": 3, "Text": ["Reimu Hakurei"], "Category": [2], "Image": "images/waifus/reimu-hakurei.jpg" },
-
     { "Id": 16, "SubjectId": 3, "Text": ["Kuroka Toujou"], "Category": [3], "Image": "images/waifus/kuroka-toujou.jpg" },
     { "Id": 17, "SubjectId": 3, "Text": ["Erika Itsumi"], "Category": [1], "Image": "images/waifus/erika-itsumi.jpg" },
     { "Id": 18, "SubjectId": 3, "Text": ["Shiroko"], "Category": [0], "Image": "images/waifus/shiroko.jpg" },
     { "Id": 19, "SubjectId": 3, "Text": ["Sakuya Izayoi"], "Category": [2], "Image": "images/waifus/sakuya-izayoi.jpg" },
     { "Id": 20, "SubjectId": 3, "Text": ["Xenovia Quarta"], "Category": [3], "Image": "images/waifus/xenovia-quarta.jpg" },
-
     { "Id": 21, "SubjectId": 3, "Text": ["Maho Nishizumi"], "Category": [1], "Image": "images/waifus/maho-nishizumi.jpg" }
   ]
 }
