@@ -126,7 +126,7 @@ namespace ui
 
             if (parentWindow != null)
             {
-                parentWindow.StartRanking(_subjectId);
+                parentWindow.StartRanking(_subjectId, selectedCategories);
             }
         }
     }

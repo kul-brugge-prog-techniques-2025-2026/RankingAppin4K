@@ -26,10 +26,10 @@ namespace ui
             MainContainer.Content = new StartScreen();
         }
 
-        public void StartRanking(int subjectId)
+        public void StartRanking(int subjectId, List<int> catids)
         {
             //Vervangt huidige content door MainGameScreen en geeft subjectId door aan de contstructor
-            MainContainer.Content = new MainGameScreen(subjectId);
+            MainContainer.Content = new MainGameScreen(subjectId, catids);
         }
 
         public void ShowResults(Business business, int subjectId)

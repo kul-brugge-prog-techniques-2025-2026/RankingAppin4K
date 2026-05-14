@@ -32,12 +32,31 @@ namespace business
         PersistenceObject opslag { get; set; }
         int subjectId { get; set; }
         Random r { get; set; }
-        public Business(int subjectId, PersistenceObject persistence)
+        public Business(int subjectId, PersistenceObject persistence, List<int>? categoryids=null)
         {
             opslag = persistence;
             this.subjectId = subjectId;
             r = new Random();
             subjectItems = opslag.Get_SubjectItems(subjectId);
+            subjectItem[] scopy = subjectItems.ToArray();
+            if (categoryids != null)
+            {
+                foreach (subjectItem s in scopy)
+                {
+                    bool keep = false;
+                    foreach (int categoryid in s.Category)
+                    {
+                        if (categoryids.Contains(categoryid))
+                        {
+                            keep = true;
+                        }
+                    }
+                    if (!keep)
+                    {
+                        subjectItems.Remove(s);
+                    }
+                }
+            }
             if(subjectItems.Count <= 1)
             {
                 throw new Exception() { Source = "Er moet meer dan 1 item zijn" };

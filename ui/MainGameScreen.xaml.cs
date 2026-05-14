@@ -23,7 +23,7 @@ namespace ui
         private subjectItem[] _currentOptions;
         private int _subjectId;
 
-        public MainGameScreen(int subjectId)
+        public MainGameScreen(int subjectId, List<int> catids)
         {
             InitializeComponent();
 
@@ -31,7 +31,7 @@ namespace ui
             _persistence = new PersistenceObject();
 
             //BusinessLayer krijgt subject id en persistence pointer mee, zorgt dat business layer weet welk thema er gerankt wordt
-            _business = new Business(_subjectId, _persistence);
+            _business = new Business(_subjectId, _persistence,catids);
 
             //LoadFilters();
             NextRound();
