@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ui"
         mc:Ignorable="d"
-        Title="Ranking App" Height="800" Width="1200">
+        Title="Ranking App" Height="800" Width="1200"
+        Icon="Resources/RankingApp.ico">
     <Grid>
         <ContentControl x:Name="MainContainer"/>
     </Grid>

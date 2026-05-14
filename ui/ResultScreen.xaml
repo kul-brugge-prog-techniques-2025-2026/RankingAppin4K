@@ -15,7 +15,7 @@
         <!--Section 1: Save ranking-->
         <Border Grid.Row="0" Background="White" Padding="15" Margin="0,0,0,10">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button x:Name="btnReturnStart" Content="Start new ranking" Click="btnReturnStart_Click" Padding="15,5" Margin="0,0,15,0" Background="LightSalmon" Foreground="White" FontWeight="Bold"/>
+                <Button x:Name="btnReturnStart" Content="Start new ranking" Click="btnReturnStart_Click" Padding="15,5" Margin="0,0,15,0" Background="LightCoral" Foreground="White" FontWeight="Bold"/>
                 <TextBlock Text="Name:" VerticalAlignment="Center" Margin="0,0,10,0" FontSize="18" FontWeight="Bold"/>
                 <TextBox x:Name="txtUserName" Width="200" Padding="5" VerticalContentAlignment="Center"/>
                 <Button x:Name="btnSave" Content="Save ranking" Click="btnSave_Click" Padding="15,5" Margin="10,0,0,0" Background="LightGreen" Foreground="White" FontWeight="Bold"/>
@@ -31,6 +31,12 @@
 
             <GroupBox Header="Ranking result" Margin="0,0,10,0">
                 <ListView x:Name="lvResultList">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Rank" Width="40">
@@ -44,7 +50,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Border CornerRadius="5" ClipToBounds="True" Margin="2">
-                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"/>
+                                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold" FontSize="14"/>
                                         </Border>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -53,7 +59,7 @@
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Border CornerRadius="5" ClipToBounds="True" Margin="2">
-                                            <Image Source="{Binding Image}" Height="60" Width="80" Stretch="UniformToFill"/>
+                                            <Image Source="{Binding Image}" Height="60" Width="80" Stretch="Uniform"/>
                                         </Border>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -81,16 +87,33 @@
                     </ListView>
                 </GroupBox>
 
-                <GroupBox Grid.Row="1" Header="Compared ranking" Margin="5,0,0,5" Background="LightGray">
-                    <ListView x:Name="lvMatchResults">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="Rank" Width="40" DisplayMemberBinding="{Binding Rank}"/>
-                                <GridViewColumn Header="Name" Width="200" DisplayMemberBinding="{Binding Name}"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </GroupBox>
+                <Grid Grid.Row="1" Margin="5,0,0,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <GroupBox Header="Own ranking" Margin="0,0,2,0" Background="LightGray">
+                        <ListView x:Name="lvOwnComparison">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Rank" Width="40" DisplayMemberBinding="{Binding Rank}"/>
+                                    <GridViewColumn Header="Name" Width="140" DisplayMemberBinding="{Binding Name}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </GroupBox>
+                    <GroupBox Grid.Column="1" Header="Compared ranking" Margin="0,0,2,0" Background="LightGray">
+                        <ListView x:Name="lvMatchResults">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Rank" Width="40" DisplayMemberBinding="{Binding Rank}"/>
+                                    <GridViewColumn Header="Name" Width="140" DisplayMemberBinding="{Binding subjectitem.Text[0]}"/>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </GroupBox>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

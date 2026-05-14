@@ -10,23 +10,27 @@ namespace persistentie
 {
     public class PersistenceObject
     {
-        private string subjectFilePath = "json_files/Subjects.json";
-
-        private string rankingsFolder = "savedRankings";
-
+        private string _subjectFilePath = "json_files/Subjects.json";
         private string _rootDataPath;
         private string _rankingsFolder;
+
+        private const int MaxSearchDepth = 6;
 
         private class SubjectsWrapper { public List<Subject> Subjects { get; set; } }
         private class ItemsWrapper { public List<subjectItem> Items { get; set; } }
 
         public PersistenceObject()
         {
-            string currentDir = AppContext.BaseDirectory;
-            string foundPath = null;
+            InitializeDataPaths();
+            EnsureFoldersExist();
+        }
 
-            // Zoek maximaal 6 mappen omhoog (voorkomt infinite loops)
-            for (int i = 0; i < 6; i++)
+        private void InitializeDataPaths()
+        {
+            string currentDir = AppContext.BaseDirectory;
+            string? foundPath = null;
+
+            for (int i = 0; i < MaxSearchDepth; i++)
             {
                 string testPath = Path.Combine(currentDir, "json_files");
                 if (Directory.Exists(testPath))
@@ -46,70 +50,81 @@ namespace persistentie
             }
 
             _rootDataPath = foundPath;
+
             _rankingsFolder = Path.Combine(Directory.GetParent(_rootDataPath).FullName, "savedRankings");
+        }
 
-            // Zorg dat de savedRankings map bestaat
-            if (!Directory.Exists(_rankingsFolder)) Directory.CreateDirectory(_rankingsFolder);
-
-            //string baseDir = AppDomain.CurrentDomain.BaseDirectory;
-
-            //DirectoryInfo projectDir = Directory.GetParent(baseDir).Parent.Parent.Parent;
-
-            //subjectFilePath = Path.Combine(projectDir.FullName, "json_files", "subjects.json");
-            //rankingsFolder = Path.Combine(projectDir.FullName, "savedRankings");
+        private void EnsureFoldersExist()
+        {
+            if (!Directory.Exists(_rankingsFolder))
+            {
+                Directory.CreateDirectory(_rankingsFolder);
+            }
         }
 
         //Alle thema's ophalen
-        public List<Subject> Give_all_subjects()
+        public List<Subject> GiveAllSubjects()
         {
-            if (!File.Exists(subjectFilePath)) return new List<Subject>();  
-            //Lees volledig bestand uit
-            string json = File.ReadAllText(subjectFilePath);
+            if (!File.Exists(_subjectFilePath)) return new List<Subject>();  
+
+            string json = File.ReadAllText(_subjectFilePath);
             //converteer de tekst naar list van subjects
             var wrapper = JsonSerializer.Deserialize<SubjectsWrapper>(json);
             return wrapper?.Subjects ?? new List<Subject>();
         }
 
         //Alle items voor specifieke categorie ophalen
-        public List<subjectItem> Get_SubjectItems(int subjectId)
+        public List<subjectItem> GetSubjectItems(int subjectId)
         {
-            var allSubjects = Give_all_subjects();
+            var allSubjects = GiveAllSubjects();
 
             var currentSubject = allSubjects.FirstOrDefault(s => s.Id == subjectId);
 
             if (currentSubject == null) return new List<subjectItem>();
 
-            string subjectsDir = Path.GetDirectoryName(subjectFilePath) ?? AppDomain.CurrentDomain.BaseDirectory;
+            string subjectsDir = Path.GetDirectoryName(_subjectFilePath) ?? AppDomain.CurrentDomain.BaseDirectory;
             string specificFileName = Path.Combine(subjectsDir, $"{currentSubject.Name}.json");
 
             if (!File.Exists(specificFileName)) return new List<subjectItem>();
 
             string json = File.ReadAllText(specificFileName);
             var wrapper = JsonSerializer.Deserialize<ItemsWrapper>(json);
+            var items = wrapper?.Items ?? new List<subjectItem>();
 
-            return wrapper?.Items ?? new List<subjectItem>();
+            string projectRoot = Directory.GetParent(_rootDataPath).FullName;
+            foreach (var item in items)
+            {
+                if (!Path.IsPathRooted(item.Image))
+                {
+                    item.Image = Path.GetFullPath(Path.Combine(projectRoot, item.Image));
+                }
+            }
+            return items;
         }
 
         //Haalt alle opgeslagen rankings op voor een categorie
-        public List<RankingResult> retrieve_rankings(int subjectId)
+        public List<RankingResult> RetrieveRankings(int subjectId)
         {
             List<RankingResult> results = new List<RankingResult>();
 
-            string[] files = Directory.GetFiles(rankingsFolder, "ranking_*.json");
+            string[] files = Directory.GetFiles(_rankingsFolder, "ranking_*.json");
 
             foreach (string file in files)
             {
                 try
                 {
                     string json = File.ReadAllText(file);
-                    RankingResult res = JsonSerializer.Deserialize<RankingResult>(json);
+                    RankingResult rankingResult = JsonSerializer.Deserialize<RankingResult>(json);
 
-                    if (res != null && res.SubjectId == subjectId)
+                    if (rankingResult != null && rankingResult.SubjectId == subjectId)
                     {
-                        results.Add(res);
+                        results.Add(rankingResult);
                     }
                 }
-                catch { }
+                catch (Exception ex)
+                { 
+                    Console.WriteLine(ex.Message);
+                }
             }
             return results;
         }
@@ -117,19 +132,19 @@ namespace persistentie
         //Haalt de specifieke rank op van één sessie
         public List<RankingItem> GetRankingItemsForResult(int rankingResultId)
         {
-            string fileName = Path.Combine(rankingsFolder, $"ranking_{rankingResultId}.json");
+            string fileName = Path.Combine(_rankingsFolder, $"ranking_{rankingResultId}.json");
 
             if (!File.Exists(fileName)) return new List<RankingItem>();
 
-            string json = File.ReadAllText(fileName);
-            RankingResult res = JsonSerializer.Deserialize<RankingResult>(json);
+            string jsonContent = File.ReadAllText(fileName);
+            RankingResult res = JsonSerializer.Deserialize<RankingResult>(jsonContent);
 
             return res?.RankedItems ?? new List<RankingItem>();
         }
 
-        public void saveRanking(string name, int subjectId, List<RankingItem> rankedList)
+        public void SaveRanking(string name, int subjectId, List<RankingItem> rankedList)
         {
-            int newId = Directory.GetFiles(rankingsFolder, "ranking_*.json").Length + 1;
+            int newId = Directory.GetFiles(_rankingsFolder, "ranking_*.json").Length + 1;
 
             foreach (var item in rankedList)
             {
@@ -146,7 +161,7 @@ namespace persistentie
 
             string jsonString = JsonSerializer.Serialize(newResult, new JsonSerializerOptions { WriteIndented = true });
 
-            string fileName = Path.Combine(rankingsFolder, $"ranking_{newId}.json");
+            string fileName = Path.Combine(_rankingsFolder, $"ranking_{newId}.json");
             File.WriteAllText(fileName, jsonString);
         }
     }

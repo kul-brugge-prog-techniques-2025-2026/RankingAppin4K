@@ -31,7 +31,35 @@
             </Grid.ColumnDefinitions>
 
             <!--option A-->
-            <Button x:Name="btnOptionA" Grid.Column="0" Click="btnOptionA_Click" Margin="10" Background="LightBlue" BorderBrush="Gray">
+            <Button x:Name="btnOptionA" Grid.Column="0" Click="btnOptionA_Click" Margin="10" BorderBrush="Gray">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="LightBlue"/>
+                        <Setter Property="BorderBrush" Value="Gray"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="10">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="DeepSkyBlue"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="CornflowerBlue"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
                 <StackPanel>
                     <Image x:Name="imageA" Height="400" Stretch="Uniform"/>
                     <TextBlock x:Name="textA" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>
@@ -45,7 +73,37 @@
             </StackPanel>
 
             <!--option B-->
-            <Button x:Name="btnOptionB" Grid.Column="2" Click="btnOptionB_Click"  Margin="10" Background="LightSalmon" BorderBrush="Gray">
+            <Button x:Name="btnOptionB" Grid.Column="2" Click="btnOptionB_Click"  Margin="10" BorderBrush="Gray">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="LightSalmon"/>
+                        <Setter Property="BorderBrush" Value="Gray"/>
+                        <Setter Property="BorderThickness" Value="2"/>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+
+                                    <Border x:Name="border"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        CornerRadius="10">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="Salmon"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="IndianRed"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </Button.Style>
                 <StackPanel>
                     <Image x:Name="imageB" Height="400" Stretch="Uniform"/>
                     <TextBlock x:Name="textB" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="10"/>

@@ -23,7 +23,7 @@ namespace ui
         private subjectItem[] _currentOptions;
         private int _subjectId;
 
-        public MainGameScreen(int subjectId, List<int> catids)
+        public MainGameScreen(int subjectId, List<int> categoryIds)
         {
             InitializeComponent();
 
@@ -31,7 +31,7 @@ namespace ui
             _persistence = new PersistenceObject();
 
             //BusinessLayer krijgt subject id en persistence pointer mee, zorgt dat business layer weet welk thema er gerankt wordt
-            _business = new Business(_subjectId, _persistence,catids);
+            _business = new Business(_subjectId, _persistence,categoryIds);
 
             //LoadFilters();
             NextRound();
@@ -51,17 +51,17 @@ namespace ui
 
             //koppelt tekst en foto aan de ui elementen
             textA.Text = _currentOptions[0].Text[0];
-            imageA.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + _currentOptions[0].Image, UriKind.Absolute));
+            imageA.Source = new BitmapImage(new Uri(_currentOptions[0].Image, UriKind.Absolute));
 
             textB.Text = _currentOptions[1].Text[0];
-            imageB.Source = new BitmapImage(new Uri(AppDomain.CurrentDomain.BaseDirectory + _currentOptions[1].Image, UriKind.Absolute));
+            imageB.Source = new BitmapImage(new Uri(_currentOptions[1].Image, UriKind.Absolute));
 
             UpdateProgress();
         }
 
         private void UpdateProgress()
         {
-            double progress = _business.getCompletionPersentage();
+            double progress = _business.GetCompletionPercentage();
 
             if (!double.IsNaN(progress) && !double.IsInfinity(progress))
             {

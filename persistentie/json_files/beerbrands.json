@@ -76,6 +76,7 @@
     { "Id": 74, "SubjectId": 2, "Text": ["Hertog Jan - Grand Prestige"], "Category": [12], "Image": "images/beers/grand-prestige.png" },
     { "Id": 75, "SubjectId": 2, "Text": ["Achel - Bruin"], "Category": [5], "Image": "images/beers/achel-bruin.jpg" },
     { "Id": 76, "SubjectId": 2, "Text": ["Brouwerij Goeie Toer - Hello Blondie"], "Category": [1], "Image": "images/beers/hello-blondie.png" },
-    { "Id": 77, "SubjectId": 2, "Text": ["100 Watt - Orchestra di Arancia"], "Category": [6], "Image": "images/beers/orchestra-arancia.png" }
+    { "Id": 77, "SubjectId": 2, "Text": ["100 Watt - Orchestra di Arancia"], "Category": [6], "Image": "images/beers/orchestra-arancia.png" },
+    { "Id": 78, "SubjectId": 2, "Text": ["Hoegaarden - Wit"], "Category": [8], "Image": "images/beers/hoegaarden-wit.jpg" }
   ]
 }

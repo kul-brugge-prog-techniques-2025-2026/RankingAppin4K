@@ -54,6 +54,8 @@ namespace ui
             //Koppel de gevulde lijst aan de Itemsource van de listview
             lvResultList.ItemsSource = displayList;
 
+            lvOwnComparison.ItemsSource = displayList;
+
             //Roep de vergelijkings method op in de business laag
             var savedRankings = _business.GetSavedRankings();
             lvComparison.ItemsSource = savedRankings;
@@ -68,13 +70,26 @@ namespace ui
             if (string.IsNullOrEmpty(userName) )
             {
                 MessageBox.Show("Enter name before saving", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                txtUserName.Focus();
                 return;
             }
 
-            //Stuurt de naam naar de business laag.
-            _business.SaveCurrent(userName);
+            try
+            {
+                _business.SaveCurrent(userName);
 
-            MessageBox.Show($"Ranking saved succesfully for {userName}");
+                txtUserName.IsEnabled = false;
+                btnSave.IsEnabled = false;
+
+                btnSave.Content = "Saved";
+                btnSave.Background = System.Windows.Media.Brushes.Gray;
+
+                MessageBox.Show($"Ranking saved succesfully for {userName}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while saving: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void lvComparison_SelectionChanged(object sender, SelectionChangedEventArgs e)

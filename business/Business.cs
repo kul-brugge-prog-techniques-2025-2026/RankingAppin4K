@@ -37,7 +37,7 @@ namespace business
             opslag = persistence;
             this.subjectId = subjectId;
             r = new Random();
-            subjectItems = opslag.Get_SubjectItems(subjectId);
+            subjectItems = opslag.GetSubjectItems(subjectId);
             subjectItem[] scopy = subjectItems.ToArray();
             if (categoryids != null)
             {
@@ -67,6 +67,7 @@ namespace business
             subRankings = new List<Subranking>();
             comparisonsNeeded(subjectItems.Count);
         }
+
         public Business()//test initialisation
         {
             subjectId = 0;
@@ -226,7 +227,7 @@ namespace business
             MergeSource2 = subRankings[1];
             CurrentComparison = new DirectComparator(MergeSource1.rankedHighToLow[Source1Iterator], MergeSource2.rankedHighToLow[Source2Iterator]);
         }
-        public double getCompletionPersentage()
+        public double GetCompletionPercentage()
         {
             if (state == State.SRankCreating)
             {
@@ -251,12 +252,15 @@ namespace business
             }
             //everything should be in subrankings[0]
             var list = new List<RankingItem>();
+            int idCounter = 1;
             for ( int i = 0; i < subRankings[0].rankedHighToLow.Count; i++ ) {
                 foreach (subjectItem si in subRankings[0].rankedHighToLow[i].itemsThisRanking)
                 {
                     RankingItem RA = new RankingItem();
+                    RA.Id = idCounter++;
                     RA.subjectitem = si;
-                    RA.Rank = i;
+                    RA.Rank = i + 1;
+                    RA.subjectItemId = si.Id;
                     list.Add(RA);
                 }
             }
@@ -268,21 +272,21 @@ namespace business
             RankingResult result = new RankingResult() {Name = userName};
             result.RankedItems = GetFinalRankedList();
             result.SubjectId = subjectId;
-            opslag.saveRanking(userName, subjectId, GetFinalRankedList());
+            opslag.SaveRanking(userName, subjectId, GetFinalRankedList());
 
         }
 
-        public List<Subject> Give_all_subjects()
+        public List<Subject> GiveAllSubjects()
         {
             //return null;
-            return opslag.Give_all_subjects();
+            return opslag.GiveAllSubjects();
         }
 
         public List<RankingResult> GetSavedRankings()
         {
-            var results = opslag?.retrieve_rankings(subjectId) ?? new List<RankingResult>();
-
-            var lookup = subjectItems.ToDictionary(si => si.Id);
+            var results = opslag?.RetrieveRankings(subjectId) ?? new List<RankingResult>();
+            var allItemsForLookup = opslag.GetSubjectItems(subjectId);
+            var lookup = allItemsForLookup.ToDictionary(si => si.Id);
 
             foreach (var res in results)
             {
@@ -296,7 +300,6 @@ namespace business
             }
 
             return results;
-            //return opslag?.retrieve_rankings(subjectId) ?? new List<RankingResult>();
         }
 
         public List<RankingItem> GetRankingItemsForResult(int rankingResultId)

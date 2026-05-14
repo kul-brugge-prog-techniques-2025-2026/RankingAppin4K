@@ -8,15 +8,15 @@ namespace persistentie
         public Program()
         {
             Console.WriteLine("hi");
-            test();
+            Test();
         }
 
         public static void Main(string[] args)
         {
             Console.WriteLine("hi");
-            test();
+            Test();
         }
-        public static void test()
+        public static void Test()
         {
             try
             {
@@ -26,7 +26,7 @@ namespace persistentie
 
                 Console.WriteLine("\n--- Laden van subjects ---");
 
-                List<Subject> subjects = po.Give_all_subjects();
+                List<Subject> subjects = po.GiveAllSubjects();
 
                 Console.WriteLine($"Aantal subjects gevonden: {subjects.Count}");
 
@@ -42,7 +42,7 @@ namespace persistentie
 
                 Console.WriteLine($"\n--- Laden van items voor {subjects[0].Name} ---");
 
-                List<subjectItem> items = po.Get_SubjectItems(subjectId);
+                List<subjectItem> items = po.GetSubjectItems(subjectId);
 
                 Console.WriteLine($"Aantal items gevonden: {items.Count}");
 
@@ -73,13 +73,13 @@ namespace persistentie
                     });
                 }
 
-                po.saveRanking("TestRanking", subjectId, top5List);
+                po.SaveRanking("TestRanking", subjectId, top5List);
 
                 Console.WriteLine("Ranking opgeslagen!");
 
                 Console.WriteLine("\n--- Opgeslagen rankings ophalen ---");
 
-                var savedRankings = po.retrieve_rankings(subjectId);
+                var savedRankings = po.RetrieveRankings(subjectId);
 
                 Console.WriteLine($"Aantal rankings gevonden: {savedRankings.Count}");
 

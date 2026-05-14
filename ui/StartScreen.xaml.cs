@@ -27,6 +27,7 @@ namespace ui
         private PersistenceObject _persistence;
 
         private int _subjectId = -1;
+        const int DefaultSubjectId = 1;
 
         public StartScreen()
         {
@@ -34,7 +35,7 @@ namespace ui
 
             _persistence = new PersistenceObject();
             //init bussiness logica
-            _business = new Business(1, _persistence);
+            _business = new Business(DefaultSubjectId, _persistence);
 
             LoadCategories();
         }
@@ -42,13 +43,13 @@ namespace ui
         private void LoadCategories()
         {
             //Vraag lijst van subject-objecten op via business laag
-            List<Subject> subjects = _business.Give_all_subjects();
+            List<Subject> subjects = _business.GiveAllSubjects();
 
             string baseDir = AppDomain.CurrentDomain.BaseDirectory;
 
             foreach (var subject in subjects)
             {
-                List<subjectItem> items = _persistence.Get_SubjectItems(subject.Id);
+                List<subjectItem> items = _persistence.GetSubjectItems(subject.Id);
 
                 if (items != null && items.Count > 0)
                 {
