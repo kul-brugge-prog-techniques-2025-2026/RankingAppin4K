@@ -259,7 +259,7 @@ namespace business
                     RankingItem RA = new RankingItem();
                     RA.Id = idCounter++;
                     RA.subjectitem = si;
-                    RA.Rank = i + 1;
+                    RA.Rank = i;
                     RA.subjectItemId = si.Id;
                     list.Add(RA);
                 }
@@ -311,17 +311,23 @@ namespace business
         {
             List<RankingItem> ri = opslag.GetRankingItemsForResult(r.Id);
             List<RankingItem> ri2 = opslag.GetRankingItemsForResult(r2.Id);
-            if (ri.Count != ri2.Count)    //check ook nog voor zelfde categorie
-            {
-                throw new Exception();//niet zelfde onderwerp, of de rankschikking is nog niet klaar
-            }
-            var comparingpositions2 = (from item in ri2 select item.Rank).ToArray();
-            var comparingpositions = (from item in ri select item.Rank).ToArray();
-            var comparingIds2 = (from item in ri select item.Id).ToArray();
-            var comparingIds = (from item in ri select item.Id).ToArray();
-            double similairty = compareResults(comparingpositions2, comparingIds2, comparingpositions, comparingIds, ri2.Count,comparingpositions.Last(), comparingpositions2.Last());
+            var comparingpositions2 = (from item in ri2 orderby item.Rank select item.Rank).ToArray();
+            var comparingpositions = (from item in ri orderby item.Rank select item.Rank).ToArray();
+            var comparingIds2 = (from item in ri2 orderby item.Rank select item.subjectItemId).ToArray();
+            var comparingIds = (from item in ri orderby item.Rank select item.subjectItemId).ToArray();
+            double similairty = compareResults(comparingpositions, comparingpositions2, comparingIds, comparingIds2, ri.Count, ri2.Count,comparingpositions.Last() + 1, comparingpositions2.Last() + 1);
             return  similairty;
-            
+        }
+        public double Compare(RankingResult r2)
+        {
+            List<RankingItem> ri = GetFinalRankedList();
+            List<RankingItem> ri2 = opslag.GetRankingItemsForResult(r2.Id);
+            var comparingpositions2 = (from item in ri2 orderby item.Rank select item.Rank).ToArray();
+            var comparingpositions = (from item in ri orderby item.Rank select item.Rank).ToArray();
+            var comparingIds2 = (from item in ri2 orderby item.Rank select item.subjectItemId).ToArray();
+            var comparingIds = (from item in ri orderby item.Rank select item.subjectItemId).ToArray();
+            double similairty = compareResults(comparingpositions,comparingpositions2, comparingIds, comparingIds2, ri.Count, ri2.Count, comparingpositions.Last()+1, comparingpositions2.Last()+1);//+1 because it is zerobased data, but the math expects non zerobased rankings
+            return similairty;
         }
         public void comparisonsNeeded(int items)//mimics the algorithm to see at which checkpoints (end of merge) we have a certain completion.
         {
@@ -347,7 +353,7 @@ namespace business
             }
             worstcaseComparisonsNeeded = total;
         }
-        [DllImport("MyCppLib.dll")]
-        public static extern double compareResults(int[] positions1, int[] positions2, int[] ids1, int[] ids2, int length, int maxranking1, int maxranking2);
+        [DllImport("RankingComparing.dll")]
+        public static extern double compareResults(int[] positions1, int[] positions2, int[] ids1, int[] ids2, int length1, int length2, int maxranking1, int maxranking2);
     }
 }

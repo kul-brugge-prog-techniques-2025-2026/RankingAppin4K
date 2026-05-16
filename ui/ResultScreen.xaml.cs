@@ -98,7 +98,8 @@ namespace ui
             {
                 //Vernieuwt de onderste lijst met een lijst van andere user
                 lvMatchResults.ItemsSource = selected.RankedItems;
-            }     
+                Console.WriteLine("similarity: " + _business.Compare(selected));
+            }
         }
 
         private void btnReturnStart_Click(object sender, RoutedEventArgs e)

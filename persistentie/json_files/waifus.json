@@ -20,6 +20,9 @@
     { "Id": 18, "SubjectId": 3, "Text": ["Shiroko"], "Category": [0], "Image": "images/waifus/shiroko.jpg" },
     { "Id": 19, "SubjectId": 3, "Text": ["Sakuya Izayoi"], "Category": [2], "Image": "images/waifus/sakuya-izayoi.jpg" },
     { "Id": 20, "SubjectId": 3, "Text": ["Xenovia Quarta"], "Category": [3], "Image": "images/waifus/xenovia-quarta.jpg" },
-    { "Id": 21, "SubjectId": 3, "Text": ["Maho Nishizumi"], "Category": [1], "Image": "images/waifus/maho-nishizumi.jpg" }
+    { "Id": 21, "SubjectId": 3, "Text": ["Maho Nishizumi"], "Category": [1], "Image": "images/waifus/maho-nishizumi.jpg" },
+    { "Id": 22, "SubjectId": 3, "Text": ["Tatsumaki"], "Category": [4], "Image": "images/waifus/tatsumaki.jpg" },
+    { "Id": 24, "SubjectId": 3, "Text": ["Erza Scarlet"], "Category": [4], "Image": "images/waifus/erza.jpg" }
+
   ]
 }

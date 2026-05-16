@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
     <ProjectReference Include="..\persistentie\persistentie.csproj" />
+    <ProjectReference Include="..\RankingComparing\RankingComparing.vcxproj" />
   </ItemGroup>
 
 </Project>
