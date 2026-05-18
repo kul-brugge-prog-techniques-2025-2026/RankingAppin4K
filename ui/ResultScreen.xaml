@@ -77,13 +77,12 @@
 
                 <GroupBox Grid.Column="1" Header="Simular rankings" Margin="5,0,0,5">
                     <ListView x:Name="lvComparison" SelectionChanged="lvComparison_SelectionChanged">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" Padding="10">
-                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" FontSize="14" Width="auto"/>
-                                </Border>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="Match" Width="60" DisplayMemberBinding="{Binding SimilarityRate, StringFormat={}{0:F1}%}"/>
+                                <GridViewColumn Header="Name" Width="140" DisplayMemberBinding="{Binding Name}"/>
+                            </GridView>
+                        </ListView.View>
                     </ListView>
                 </GroupBox>
 
@@ -108,7 +107,7 @@
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Rank" Width="40" DisplayMemberBinding="{Binding Rank}"/>
-                                    <GridViewColumn Header="Name" Width="140" DisplayMemberBinding="{Binding subjectitem.Text[0]}"/>
+                                    <GridViewColumn Header="Name" Width="140" DisplayMemberBinding="{Binding Name}"/>
                                 </GridView>
                             </ListView.View>
                         </ListView>

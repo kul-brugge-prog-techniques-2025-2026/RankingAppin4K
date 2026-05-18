@@ -10,9 +10,8 @@ namespace persistentie
 {
     public class PersistenceObject
     {
-        private string _subjectFilePath = "json_files/Subjects.json";
-        private string _rootDataPath;
-        private string _rankingsFolder;
+        private string _rootDataPath;   //Pad van bron JSON bestanden
+        private string _rankingsFolder; //Pad van opgeslagen rankings
 
         private const int MaxSearchDepth = 6;
 
@@ -65,9 +64,11 @@ namespace persistentie
         //Alle thema's ophalen
         public List<Subject> GiveAllSubjects()
         {
-            if (!File.Exists(_subjectFilePath)) return new List<Subject>();  
+            string fullPath = Path.Combine(_rootDataPath, "Subjects.json");
 
-            string json = File.ReadAllText(_subjectFilePath);
+            if (!File.Exists(fullPath)) return new List<Subject>();  
+
+            string json = File.ReadAllText(fullPath);
             //converteer de tekst naar list van subjects
             var wrapper = JsonSerializer.Deserialize<SubjectsWrapper>(json);
             return wrapper?.Subjects ?? new List<Subject>();
@@ -82,8 +83,8 @@ namespace persistentie
 
             if (currentSubject == null) return new List<subjectItem>();
 
-            string subjectsDir = Path.GetDirectoryName(_subjectFilePath) ?? AppDomain.CurrentDomain.BaseDirectory;
-            string specificFileName = Path.Combine(subjectsDir, $"{currentSubject.Name}.json");
+            //string subjectsDir = Path.GetDirectoryName(_subjectFilePath) ?? AppDomain.CurrentDomain.BaseDirectory;
+            string specificFileName = Path.Combine(_rootDataPath, $"{currentSubject.Name}.json");
 
             if (!File.Exists(specificFileName)) return new List<subjectItem>();
 

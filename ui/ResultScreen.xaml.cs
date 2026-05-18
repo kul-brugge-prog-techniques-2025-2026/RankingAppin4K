@@ -58,7 +58,24 @@ namespace ui
 
             //Roep de vergelijkings method op in de business laag
             var savedRankings = _business.GetSavedRankings();
-            lvComparison.ItemsSource = savedRankings;
+            //lvComparison.ItemsSource = savedRankings;
+            var displayComparisons = new List<ComparedRankingResult>();
+
+            foreach (var savedItem in savedRankings)
+            {
+                double simScore = _business.Compare(savedItem);
+
+                displayComparisons.Add(new ComparedRankingResult
+                {
+                    Id = savedItem.Id,
+                    Name = savedItem.Name,
+                    SubjectId = savedItem.SubjectId,
+                    RankedItems = savedItem.RankedItems,
+                    SimilarityRate = simScore
+                });
+            }
+
+            lvComparison.ItemsSource = displayComparisons.OrderByDescending(x => x.SimilarityRate).ToList();
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -94,11 +111,21 @@ namespace ui
 
         private void lvComparison_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (lvComparison.SelectedItem is RankingResult selected)
+            if (lvComparison.SelectedItem is ComparedRankingResult selected)
             {
-                //Vernieuwt de onderste lijst met een lijst van andere user
-                lvMatchResults.ItemsSource = selected.RankedItems;
-                Console.WriteLine("similarity: " + _business.Compare(selected));
+                var matchDisplay = new List<RankedItemDisplay>();
+
+                foreach (var  item in selected.RankedItems)
+                {
+                    matchDisplay.Add(new RankedItemDisplay
+                    {
+                        Rank = item.Rank + 1,
+                        Name = item.subjectitem?.Text[0] ?? "Unknown",
+                        Image = item.subjectitem?.Image ?? ""
+                    });
+                }
+
+                lvMatchResults.ItemsSource = matchDisplay;
             }
         }
 
