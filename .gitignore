@@ -3,4 +3,5 @@ bin/
 obj/
 *.user
 *.suo
-ARM64
+ARM64/
+packages/
