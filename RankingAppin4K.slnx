@@ -15,6 +15,7 @@
   <Project Path="persistentie/persistentie.csproj" Id="68e37cef-1da4-4dc0-a115-cbf40a15e42c">
     <Platform Solution="*|ARM64" Project="ARM64" />
   </Project>
+  <Project Path="persistentieTests/persistentieTests.csproj" Id="72e860bf-b512-40b1-9fd9-db5a59f2ef87" />
   <Project Path="RankingComparing/RankingComparing.vcxproj" Id="fe772067-418b-4593-96d2-a6cf376d5fb8" />
   <Project Path="ui/ui.csproj" Id="a1b1b26b-866b-4833-9cca-5a29b881f82c">
     <Platform Solution="*|ARM64" Project="ARM64" />
