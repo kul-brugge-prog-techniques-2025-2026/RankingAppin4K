@@ -259,6 +259,12 @@ namespace business
                 {
                     return false;
                 }
+            }else if(modest == mode.listtoone)
+            {
+                if(lto_After.itemsThisRanking.Count == 0 && lto_Ahead.itemsThisRanking.Count == 0)
+                {
+                    return false;
+                }
             }
             return true;
         }

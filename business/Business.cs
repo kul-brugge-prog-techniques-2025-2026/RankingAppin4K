@@ -167,13 +167,14 @@ namespace business
                     {
                         Source1Iterator++;
                         Source2Iterator++;
+                        creatieRuimte.rankedHighToLow.AddRange(CurrentComparison.RankedReturn().Skip(CurrentComparison.RankedReturn().Count - 1));
                     }
                     else
                     {
                         if (CurrentComparison.LosingStack() == 2)
                         {
                             Source1Iterator++;
-                            MergeSource2.rankedHighToLow[Source2Iterator] = CurrentComparison.RankedReturn().TakeLast(1).ToArray()[0];
+                            MergeSource2.rankedHighToLow[Source2Iterator] = CurrentComparison.RankedReturn().TakeLast(1).ToArray()[0];//replace
                         }
                         else
                         {

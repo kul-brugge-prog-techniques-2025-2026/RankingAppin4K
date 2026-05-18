@@ -8,6 +8,7 @@
   <Project Path="business/business.csproj" Id="8c812af0-df07-4760-8ebb-4a67a8455ddf">
     <Platform Solution="*|ARM64" Project="ARM64" />
   </Project>
+  <Project Path="businessStressTest/businessStressTest.csproj" Id="5c07e8e1-fb66-4b92-b991-8d78fbccd6db" />
   <Project Path="Models/Models.csproj" Id="211604c7-945f-4b1f-8183-18e33d0dd18e">
     <Platform Solution="*|ARM64" Project="ARM64" />
   </Project>
