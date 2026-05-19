@@ -34,6 +34,13 @@ namespace ui
             _business = new Business(_subjectId, _persistence,categoryIds);
 
             //LoadFilters();
+            //NextRound();//In case of one item, the state is finished, then
+            //parent.ShowResults is called but after that MainGameScreen object is 
+            //initialized and overwrites the content change to result screen again
+            Loaded += MainGameScreen_Loaded;
+        }
+        private void MainGameScreen_Loaded(object sender, RoutedEventArgs e)
+        {
             NextRound();
         }
 

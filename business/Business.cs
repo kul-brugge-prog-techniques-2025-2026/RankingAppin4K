@@ -39,6 +39,7 @@ namespace business
             r = new Random();
             subjectItems = opslag.GetSubjectItems(subjectId);
             subjectItem[] scopy = subjectItems.ToArray();
+            state = State.SRankCreating;
             if (categoryids != null)
             {
                 foreach (subjectItem s in scopy)
@@ -57,15 +58,21 @@ namespace business
                     }
                 }
             }
-            if(subjectItems.Count <= 1)
+            if(subjectItems.Count <= 0)
             {
-                throw new Exception() { Source = "Er moet meer dan 1 item zijn" };
+                throw new Exception() { Source = "Er moet minstens 1 item zijn" };
             }
             this.WorstCaseMergeSteps = new List<int>();
-            state = State.SRankCreating;
             subjectItemsIterator = 0;
             subRankings = new List<Subranking>();
             comparisonsNeeded(subjectItems.Count);
+            if (subjectItems.Count == 1)
+            {
+                state = State.finished;
+                Subranking subranking = new Subranking();
+                subranking.rankedHighToLow = new List<RankingPlace> { new RankingPlace() { itemsThisRanking = subjectItems } };
+                subRankings.Add(subranking);
+            }
         }
 
         public Business()//test initialisation
@@ -332,6 +339,11 @@ namespace business
         }
         public void comparisonsNeeded(int items)//mimics the algorithm to see at which checkpoints (end of merge) we have a certain completion.
         {
+            if(items <= 1)
+            {
+                worstcaseComparisonsNeeded = 0;
+                return;
+            }
             int total = 0;
             int i = 0;
             List<Int32> GroupSizes = new List<int>();
