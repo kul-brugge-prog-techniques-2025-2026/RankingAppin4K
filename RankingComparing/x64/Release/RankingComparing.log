@@ -1,0 +1,9 @@
+﻿  pch.cpp
+  dllmain.cpp
+  RankingComarator.cpp
+     Creating library C:\Users\robin\Documents\ELIC schakelprog 2de semester\Programmeertechnieken\Labo opdracht\RankingAppin4K\x64\Release\RankingComparing.lib and object C:\Users\robin\Documents\ELIC schakelprog 2de semester\Programmeertechnieken\Labo opdracht\RankingAppin4K\x64\Release\RankingComparing.exp
+  Generating code
+  Previous IPDB not found, fall back to full compilation.
+  All 3 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Finished generating code
+  RankingComparing.vcxproj -> C:\Users\robin\Documents\ELIC schakelprog 2de semester\Programmeertechnieken\Labo opdracht\RankingAppin4K\x64\Release\RankingComparing.dll

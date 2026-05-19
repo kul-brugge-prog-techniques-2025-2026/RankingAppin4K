@@ -73,7 +73,7 @@ namespace ui
 
                 LoadFilters(selectedSubject);
 
-                btnStartRanking.IsEnabled = true;
+                //btnStartRanking.IsEnabled = true;
             }
         }
 
@@ -93,9 +93,13 @@ namespace ui
                         IsChecked = true
                     };
 
+                    cb.Checked += (s, e) => UpdateStartButton();
+                    cb.Unchecked += (s, e) => UpdateStartButton();
+
                     wpFilters.Children.Add(cb);
                 }
             }
+            UpdateStartButton();
         }
 
         private List<int> GetSelectedCategories()
@@ -129,6 +133,12 @@ namespace ui
             {
                 parentWindow.StartRanking(_subjectId, selectedCategories);
             }
+        }
+
+        private void UpdateStartButton()
+        {
+            List<int> selectedCategories = GetSelectedCategories();
+            btnStartRanking.IsEnabled = (_subjectId != -1 && selectedCategories.Count > 0);
         }
     }
 }

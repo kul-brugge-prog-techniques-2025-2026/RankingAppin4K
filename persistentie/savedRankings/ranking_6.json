@@ -1,0 +1,91 @@
+{
+  "Id": 6,
+  "SubjectId": 1,
+  "Name": "Jos",
+  "RankedItems": [
+    {
+      "Id": 1,
+      "subjectItemId": 71,
+      "RankingResultId": 6,
+      "Rank": 0
+    },
+    {
+      "Id": 2,
+      "subjectItemId": 69,
+      "RankingResultId": 6,
+      "Rank": 1
+    },
+    {
+      "Id": 3,
+      "subjectItemId": 29,
+      "RankingResultId": 6,
+      "Rank": 2
+    },
+    {
+      "Id": 4,
+      "subjectItemId": 30,
+      "RankingResultId": 6,
+      "Rank": 3
+    },
+    {
+      "Id": 5,
+      "subjectItemId": 25,
+      "RankingResultId": 6,
+      "Rank": 4
+    },
+    {
+      "Id": 6,
+      "subjectItemId": 27,
+      "RankingResultId": 6,
+      "Rank": 5
+    },
+    {
+      "Id": 7,
+      "subjectItemId": 41,
+      "RankingResultId": 6,
+      "Rank": 6
+    },
+    {
+      "Id": 8,
+      "subjectItemId": 47,
+      "RankingResultId": 6,
+      "Rank": 7
+    },
+    {
+      "Id": 9,
+      "subjectItemId": 35,
+      "RankingResultId": 6,
+      "Rank": 8
+    },
+    {
+      "Id": 10,
+      "subjectItemId": 36,
+      "RankingResultId": 6,
+      "Rank": 9
+    },
+    {
+      "Id": 11,
+      "subjectItemId": 56,
+      "RankingResultId": 6,
+      "Rank": 10
+    },
+    {
+      "Id": 12,
+      "subjectItemId": 53,
+      "RankingResultId": 6,
+      "Rank": 11
+    },
+    {
+      "Id": 13,
+      "subjectItemId": 68,
+      "RankingResultId": 6,
+      "Rank": 12
+    },
+    {
+      "Id": 14,
+      "subjectItemId": 67,
+      "RankingResultId": 6,
+      "Rank": 13
+    }
+  ]
+}

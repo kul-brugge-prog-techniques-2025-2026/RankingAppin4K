@@ -1,0 +1,55 @@
+{
+  "Id": 3,
+  "SubjectId": 1,
+  "Name": "Bart",
+  "RankedItems": [
+    {
+      "Id": 1,
+      "subjectItemId": 20,
+      "RankingResultId": 3,
+      "Rank": 0
+    },
+    {
+      "Id": 2,
+      "subjectItemId": 37,
+      "RankingResultId": 3,
+      "Rank": 1
+    },
+    {
+      "Id": 3,
+      "subjectItemId": 31,
+      "RankingResultId": 3,
+      "Rank": 2
+    },
+    {
+      "Id": 4,
+      "subjectItemId": 46,
+      "RankingResultId": 3,
+      "Rank": 3
+    },
+    {
+      "Id": 5,
+      "subjectItemId": 21,
+      "RankingResultId": 3,
+      "Rank": 4
+    },
+    {
+      "Id": 6,
+      "subjectItemId": 38,
+      "RankingResultId": 3,
+      "Rank": 5
+    },
+    {
+      "Id": 7,
+      "subjectItemId": 1,
+      "RankingResultId": 3,
+      "Rank": 6
+    },
+    {
+      "Id": 8,
+      "subjectItemId": 3,
+      "RankingResultId": 3,
+      "Rank": 7
+    }
+  ]
+}

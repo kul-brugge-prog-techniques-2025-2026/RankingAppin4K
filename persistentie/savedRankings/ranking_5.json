@@ -1,0 +1,55 @@
+{
+  "Id": 5,
+  "SubjectId": 1,
+  "Name": "Koen",
+  "RankedItems": [
+    {
+      "Id": 1,
+      "subjectItemId": 46,
+      "RankingResultId": 5,
+      "Rank": 0
+    },
+    {
+      "Id": 2,
+      "subjectItemId": 38,
+      "RankingResultId": 5,
+      "Rank": 1
+    },
+    {
+      "Id": 3,
+      "subjectItemId": 21,
+      "RankingResultId": 5,
+      "Rank": 2
+    },
+    {
+      "Id": 4,
+      "subjectItemId": 20,
+      "RankingResultId": 5,
+      "Rank": 3
+    },
+    {
+      "Id": 5,
+      "subjectItemId": 3,
+      "RankingResultId": 5,
+      "Rank": 4
+    },
+    {
+      "Id": 6,
+      "subjectItemId": 31,
+      "RankingResultId": 5,
+      "Rank": 5
+    },
+    {
+      "Id": 7,
+      "subjectItemId": 37,
+      "RankingResultId": 5,
+      "Rank": 6
+    },
+    {
+      "Id": 8,
+      "subjectItemId": 1,
+      "RankingResultId": 5,
+      "Rank": 7
+    }
+  ]
+}

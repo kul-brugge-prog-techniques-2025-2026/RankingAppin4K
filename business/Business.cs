@@ -286,7 +286,6 @@ namespace business
 
         public List<Subject> GiveAllSubjects()
         {
-            //return null;
             return opslag.GiveAllSubjects();
         }
 

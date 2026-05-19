@@ -1,0 +1,19 @@
+{
+  "Id": 4,
+  "SubjectId": 2,
+  "Name": "Bob",
+  "RankedItems": [
+    {
+      "Id": 1,
+      "subjectItemId": 15,
+      "RankingResultId": 4,
+      "Rank": 0
+    },
+    {
+      "Id": 2,
+      "subjectItemId": 30,
+      "RankingResultId": 4,
+      "Rank": 1
+    }
+  ]
+}
